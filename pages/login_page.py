@@ -1,0 +1,23 @@
+from selenium.webdriver.common.by import By
+
+
+class LoginPage:
+    URL = "https://the-internet.herokuapp.com/login"
+    def __init__(self, driver):
+        self.driver = driver
+        self.locators = {
+            "username" : (By.ID, "username"),
+            "password" : (By.ID, "password"),
+            "login_button" : (By.CLASS_NAME, "radius")
+        }
+
+    def successful_login(self, name, pas):
+        from pages.secure_page import SecurePage
+        username_el = self.driver.find_element(*self.locators["username"])
+        password_el = self.driver.find_element(*self.locators["password"])
+        login_btn_el = self.driver.find_element(*self.locators["login_button"])
+        password_el.send_keys(pas)
+        username_el.send_keys(name)
+        login_btn_el.click()
+        return SecurePage(self.driver)
+
