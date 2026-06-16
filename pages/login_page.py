@@ -28,6 +28,16 @@ class LoginPage:
         login_btn_el = self.driver.find_element(*self.locators["login_button"])
         if name == "" and pas == "" :
             print("the username and password empty")
+        elif name == "" :
+            print("the username is empty")
+            password_el.send_keys(pas)
+        elif pas == "" :
+            print("the password is empty")
+            username_el.send_keys(name)
+        else :
+            print("niether username nor password is empty")
+            username_el.send_keys(name)
+            password_el.send_keys(pas)
         login_btn_el.click()
         alert_el = self.driver.find_element(*self.locators["alert"])
         alert_msg = alert_el.text
