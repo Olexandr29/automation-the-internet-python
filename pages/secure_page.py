@@ -29,3 +29,8 @@ class SecurePage:
         print(f"Is logout button displayed = {result}")
         return result
     
+    def logout_method(self):
+        from pages.login_page import LoginPage
+        logout_btn_el = self.driver.find_element(*self.locators["logout_button"])
+        logout_btn_el.click()
+        return LoginPage(self.driver)

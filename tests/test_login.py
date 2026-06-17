@@ -8,6 +8,7 @@ class TestLogin:
     valid_password = "SuperSecretPassword!"
     expected_alert_username_msg = "Your username is invalid!"
     expected_alert_password_msg = "Your password is invalid!"
+    expected_logout_msg = "You logged out of the secure area!"
 
     
     def setup_method(self, method):
@@ -74,7 +75,18 @@ class TestLogin:
         assert self.expected_alert_username_msg in actual_result, \
         f"the alert message is wrong during {self.test_name} and now the page is {self.driver.current_url}"
 
-     
+    def test_8_Logout(self):
+        secure_page = self.login_page.successful_login(self.valid_username, self.valid_password)
+        print(f"we are now on {self.driver.current_url}")
+        secure_page.logout_method()
+        print(f"we are now on {self.driver.current_url}")
+        assert self.driver.current_url == self.login_page.URL, \
+        f"User should be redirected to the Login page but now on {self.driver.current_url} "
+        actual_alert_msg = self.login_page.get_alert_message()
+        assert self.expected_logout_msg in actual_alert_msg, \
+        "The alert message should be 'You logged out of the secure area!' but now '{actual_alert_msg}'"      
+        assert self.login_page.is_login_button_displayed() == True, \
+        "The Login button is not displayed"
     
 
         

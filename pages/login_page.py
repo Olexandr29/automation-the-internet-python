@@ -43,5 +43,17 @@ class LoginPage:
         alert_msg = alert_el.text
         print(f"the alert message is '{alert_msg}'")
         return alert_msg
+    
+    def get_alert_message(self):
+        alert_el = self.driver.find_element(*self.locators["alert"])
+        alert_msg = alert_el.text
+        print(f"The alert message is '{alert_msg}' ")
+        return alert_msg
+    
+    def is_login_button_displayed(self):
+        login_btn_el = self.driver.find_element(*self.locators["login_button"])
+        result = login_btn_el.is_displayed()
+        print(f"Is login button displayed = {result}")
+        return result
 
 
