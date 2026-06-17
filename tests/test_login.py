@@ -88,5 +88,92 @@ class TestLogin:
         assert self.login_page.is_login_button_displayed() == True, \
         "The Login button is not displayed"
     
+    def test_9_User_cannot_access_the_Secure_Area_after_logout(self):
+        secure_page = self.login_page.successful_login(self.valid_username, self.valid_password)
+        print(f"we are now on {self.driver.current_url}")
+        secure_page.logout_method()
+        print(f"we are logout now and on {self.driver.current_url}")
+        assert self.driver.current_url == self.login_page.URL, \
+        f"User should be redirected to the Login page but now on {self.driver.current_url} "
+        actual_alert_msg = self.login_page.get_alert_message()
+        assert self.expected_logout_msg in actual_alert_msg, \
+        "The alert message should be 'You logged out of the secure area!' but now '{actual_alert_msg}'"      
+        print(f"we are now on {self.driver.current_url}")
+        self.driver.back()
+        print(f"The browser Back button was clicked and we are now on {self.driver.current_url}")
+        assert self.driver.current_url == self.login_page.URL, \
+        f"User should remains on the Login page and should not be able to access to the Secure Area page but now the page is {self.driver.current_url}"
+        assert self.login_page.is_login_button_displayed == True, \
+        "The Login button should be displayed"
 
-        
+    def test_10_Login_with_a_Username_that_has_leading_spaces(self):
+        actual_result = self.login_page.unsuccessful_login(" tomsmith", self.valid_password)
+        assert self.expected_alert_username_msg in actual_result, \
+        "The alert 'Your username is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+    def test_11_Login_with_a_password_that_has_leading_spaces(self):
+        actual_result = self.login_page.unsuccessful_login(self.valid_username, "  SuperSecretPassword!")
+        assert self.expected_alert_password_msg in actual_result, \
+        "The alert 'Your password is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+    def test_12_Login_with_a_Username_that_has_trailing_spaces(self):
+        actual_result = self.login_page.unsuccessful_login("tomsmith ", self.valid_password)
+        assert self.expected_alert_username_msg in actual_result, \
+        "The alert 'Your username is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+    def test_13_Login_with_a_Password_that_has_trailing_spaces(self):
+        actual_result = self.login_page.unsuccessful_login(self.valid_username, "SuperSecretPassword! ")
+        assert self.expected_alert_password_msg in actual_result, \
+        "The alert 'Your password is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+    def test_14_Login_with_a_Username_that_has_a_different_case(self):
+        actual_result = self.login_page.unsuccessful_login("TOMSMITH", self.valid_password)
+        assert self.expected_alert_username_msg in actual_result, \
+         "The alert 'Your username is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+    def test_15_Login_with_a_Password_that_has_a_different_case(self):
+        actual_result = self.login_page.unsuccessful_login(self.valid_username, "SUPERSECRETPASSWORD!")
+        assert self.expected_alert_password_msg in actual_result, \
+         "The alert 'Your password is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+    def test_16_Login_with_SQL_Injection_in_Username(self):
+        actual_result = self.login_page.unsuccessful_login("' OR '1'='1", "anything")
+        assert self.expected_alert_username_msg in actual_result, \
+         "The alert 'Your username is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+    def test_17_Login_with_SQL_Injection_in_Password(self):
+        actual_result = self.login_page.unsuccessful_login(self.valid_username, "' OR '1'='1")
+        assert self.expected_alert_password_msg in actual_result, \
+         "The alert 'Your password is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+    def test_18_Login_with_XSS_in_Username(self):
+        actual_result = self.login_page.unsuccessful_login("<script>alert('xss')</script>", self.valid_password)
+        assert self.expected_alert_username_msg in actual_result, \
+         "The alert 'Your username is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+    def test_19_Login_with_XSS_in_Password(self):
+        actual_result = self.login_page.unsuccessful_login(self.valid_username, "<script>alert('xss')</script>")
+        assert self.expected_alert_password_msg in actual_result, \
+         "The alert 'Your password is invalid!' should be displayed"
+        assert self.driver.current_url == self.login_page.URL, \
+        f"The Login page should be opened but now {self.driver.current_url}"
+
+
