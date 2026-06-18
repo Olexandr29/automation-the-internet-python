@@ -101,10 +101,13 @@ class TestLogin:
         print(f"we are now on {self.driver.current_url}")
         self.driver.back()
         print(f"The browser Back button was clicked and we are now on {self.driver.current_url}")
-        assert self.driver.current_url == self.login_page.URL, \
+        self.driver.refresh()
+        print(f"The browser REFRESHED and we are now on {self.driver.current_url}")
+        login_page = LoginPage(self.driver)
+        assert self.driver.current_url == login_page.URL, \
         f"User should remains on the Login page and should not be able to access to the Secure Area page but now the page is {self.driver.current_url}"
-        assert self.login_page.is_login_button_displayed == True, \
-        "The Login button should be displayed"
+        assert login_page.is_login_button_displayed() == True, \
+        "The Login button is not displayed, but should be!"
 
     def test_10_Login_with_a_Username_that_has_leading_spaces(self):
         actual_result = self.login_page.unsuccessful_login(" tomsmith", self.valid_password)
