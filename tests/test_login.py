@@ -176,4 +176,8 @@ class TestLogin:
         assert self.driver.current_url == self.login_page.URL, \
         f"The Login page should be opened but now {self.driver.current_url}"
 
-
+    def test_20_Password_is_masked(self):
+        assert self.login_page.is_password_hidden() == True, \
+        f"The input type should be password, if True, then Password characters is hidden, but now it's {self.login_page.is_password_hidden()} "
+        assert self.login_page.is_masked_value_saved("thisPas10") == True, \
+        f"The entered value is wrong"

@@ -55,5 +55,19 @@ class LoginPage:
         result = login_btn_el.is_displayed()
         print(f"Is login button displayed = {result}")
         return result
+    
+    def is_password_hidden(self):
+        password_el = self.driver.find_element(*self.locators["password"])
+        password_input_type = password_el.get_attribute("type")
+        print(f"The password input type is '{password_input_type}'")
+        return password_input_type == "password"
+
+    def is_masked_value_saved(self, pas):
+        password_el = self.driver.find_element(*self.locators["password"])
+        password_el.send_keys(pas)
+        entered_value = password_el.get_attribute("value")
+        print(f"Here is the filled in password '{pas}' and the saved value '{entered_value}'")
+        return entered_value == pas
+
 
 
