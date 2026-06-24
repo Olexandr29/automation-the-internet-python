@@ -4,18 +4,23 @@ import os
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.secure_page import SecurePage
+import pytest
+
 
 class TestLogin:
     valid_username = "tomsmith"
     valid_password = "SuperSecretPassword!"
+    invalid_urername = "just_name"
+    invalid_password = "1p5T61"
+    sql_injection = "' OR '1'='1"
+    xss_cross_site_script = "<script>alert('xss')</script>"
     expected_alert_username_msg = "Your username is invalid!"
     expected_alert_password_msg = "Your password is invalid!"
     expected_logout_msg = "You logged out of the secure area!"
 
-    
-    def setup_method(self, method):
-        test_name = method.__name__
-        print(f"==========-=========The {test_name} is started==========-=========")
+    @pytest.fixture(autouse=True)    
+    def setup_method(self, request):
+        print(f"==========-=========The {request.node.nodeid} is started==========-=========")
         options = Options()
         options.add_argument("--incognito")
         if os.environ.get("GITHUB_ACTIONS") == "true":
@@ -44,45 +49,29 @@ class TestLogin:
         assert secure_page.is_logout_button_displayed() == True, \
         "the logout button is not displayed"
 
-    def test_2_Unsuccessful_login_with_empty_credentials(self):
-        actual_result = self.login_page.unsuccessful_login("", "")
-        assert self.expected_alert_username_msg in actual_result, \
-        "the alert message is wrong for login with BOTH empty credentials"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"the current page should be Login page without navigation on Secure page but now the page is {self.driver.current_url} "
-        
-    def test_3_Unsuccessful_login_with_empty_Password(self):
-        actual_result = self.login_page.unsuccessful_login(self.valid_username, "")
-        assert self.expected_alert_password_msg in actual_result, \
-        "the alert message is wrong for login with empty password"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"the current page should be Login page without navigation on Secure page but now the page is {self.driver.current_url} "
+    @pytest.mark.parametrize("username, password, expected_msg", [
+        pytest.param("", "", expected_alert_username_msg, id="test_2_empty_credentials"),
+        pytest.param(valid_username, "", expected_alert_password_msg, id="test_3_empty_Password"),
+        pytest.param("", valid_password, expected_alert_username_msg, id="test_4_Unsuccessful_login_with_empty_Username"),
+        pytest.param(valid_username, invalid_password, expected_alert_password_msg, id="test_5_Unsuccessful_login_with_invalid_Password"),
+        pytest.param(invalid_urername, valid_password, expected_alert_username_msg, id="test_6_Unsuccessful_login_with_invalid_Username"),
+        pytest.param(invalid_urername, invalid_password, expected_alert_username_msg, id="test_7_Unsuccessful_login_with_both_Invalid_Username_and_Password"),
+        pytest.param(" " + valid_username, valid_password, expected_alert_username_msg, id="test_10_Login_with_a_Username_that_has_leading_spaces"),
+        pytest.param(valid_username, " " + valid_password, expected_alert_password_msg, id="test_11_Login_with_a_password_that_has_leading_spaces"),
+        pytest.param(valid_username + " ", valid_password, expected_alert_username_msg, id="test_12_Login_with_a_Username_that_has_trailing_spaces"),
+        pytest.param(valid_username, valid_password + " ", expected_alert_password_msg, id="test_13_Login_with_a_Password_that_has_trailing_spaces"),
+        pytest.param(valid_username.upper(), valid_password, expected_alert_username_msg, id="test_14_Login_with_a_Username_that_has_a_different_case"),
+        pytest.param(valid_username, valid_password.upper(), expected_alert_password_msg, id="test_15_Login_with_a_Password_that_has_a_different_case"),
+        pytest.param(sql_injection, invalid_password, expected_alert_username_msg, id="test_16_Login_with_SQL_Injection_in_Username"),
+        pytest.param(valid_username, sql_injection, expected_alert_password_msg, id="test_17_Login_with_SQL_Injection_in_Password"),
+        pytest.param(xss_cross_site_script, valid_password, expected_alert_username_msg, id="test_18_Login_with_XSS_in_Username"),
+        pytest.param(valid_username, xss_cross_site_script, expected_alert_password_msg, id="test_19_Login_with_XSS_in_Password")
+    ])
 
-    def test_4_Unsuccessful_login_with_empty_Username(self):
-        actual_result = self.login_page.unsuccessful_login("", self.valid_password)
-        assert self.expected_alert_username_msg in actual_result, \
-        "the alert message is wrong for login with empty Username"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"the current page should be Login page without navigation on Secure page but now the page is {self.driver.current_url} "
-
-    def test_5_Unsuccessful_login_with_invalid_Password(self):
-        actual_result = self.login_page.unsuccessful_login(self.valid_username, "111")
-        assert self.expected_alert_password_msg in actual_result, \
-        "the alert message is wrong for login with invalid Password"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"the current page should be Login page without navigation on Secure page but now the page is {self.driver.current_url} "
-
-    def test_6_Unsuccessful_login_with_invalid_Username(self):
-        actual_result = self.login_page.unsuccessful_login("1", self.valid_password)
-        assert self.expected_alert_username_msg in actual_result, \
-        "the alert message is wrong for login with invalid Username"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"the current page should be Login page without navigation on Secure page but now the page is {self.driver.current_url} "
-
-    def test_7_Unsuccessful_login_with_both_Invalid_Username_and_Password(self):
-        actual_result = self.login_page.unsuccessful_login("invalidName", "invalidPassword")
-        assert self.expected_alert_username_msg in actual_result, \
-        f"the alert message is wrong during {self.test_name} and now the page is {self.driver.current_url}"
+    def test_unsuccessful_login(self, username, password, expected_msg):
+        actual_result = self.login_page.unsuccessful_login(username, password)
+        assert expected_msg in actual_result
+        assert self.driver.current_url == self.login_page.URL
 
     def test_8_Logout(self):
         secure_page = self.login_page.successful_login(self.valid_username, self.valid_password)
@@ -117,77 +106,7 @@ class TestLogin:
         f"User should remains on the Login page and should not be able to access to the Secure Area page but now the page is {self.driver.current_url}"
         assert login_page.is_login_button_displayed() == True, \
         "The Login button is not displayed, but should be!"
-
-    def test_10_Login_with_a_Username_that_has_leading_spaces(self):
-        actual_result = self.login_page.unsuccessful_login(" tomsmith", self.valid_password)
-        assert self.expected_alert_username_msg in actual_result, \
-        "The alert 'Your username is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
-    def test_11_Login_with_a_password_that_has_leading_spaces(self):
-        actual_result = self.login_page.unsuccessful_login(self.valid_username, "  SuperSecretPassword!")
-        assert self.expected_alert_password_msg in actual_result, \
-        "The alert 'Your password is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
-    def test_12_Login_with_a_Username_that_has_trailing_spaces(self):
-        actual_result = self.login_page.unsuccessful_login("tomsmith ", self.valid_password)
-        assert self.expected_alert_username_msg in actual_result, \
-        "The alert 'Your username is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
-    def test_13_Login_with_a_Password_that_has_trailing_spaces(self):
-        actual_result = self.login_page.unsuccessful_login(self.valid_username, "SuperSecretPassword! ")
-        assert self.expected_alert_password_msg in actual_result, \
-        "The alert 'Your password is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
-    def test_14_Login_with_a_Username_that_has_a_different_case(self):
-        actual_result = self.login_page.unsuccessful_login("TOMSMITH", self.valid_password)
-        assert self.expected_alert_username_msg in actual_result, \
-         "The alert 'Your username is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
-    def test_15_Login_with_a_Password_that_has_a_different_case(self):
-        actual_result = self.login_page.unsuccessful_login(self.valid_username, "SUPERSECRETPASSWORD!")
-        assert self.expected_alert_password_msg in actual_result, \
-         "The alert 'Your password is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
-    def test_16_Login_with_SQL_Injection_in_Username(self):
-        actual_result = self.login_page.unsuccessful_login("' OR '1'='1", "anything")
-        assert self.expected_alert_username_msg in actual_result, \
-         "The alert 'Your username is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
-    def test_17_Login_with_SQL_Injection_in_Password(self):
-        actual_result = self.login_page.unsuccessful_login(self.valid_username, "' OR '1'='1")
-        assert self.expected_alert_password_msg in actual_result, \
-         "The alert 'Your password is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
-    def test_18_Login_with_XSS_in_Username(self):
-        actual_result = self.login_page.unsuccessful_login("<script>alert('xss')</script>", self.valid_password)
-        assert self.expected_alert_username_msg in actual_result, \
-         "The alert 'Your username is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
-    def test_19_Login_with_XSS_in_Password(self):
-        actual_result = self.login_page.unsuccessful_login(self.valid_username, "<script>alert('xss')</script>")
-        assert self.expected_alert_password_msg in actual_result, \
-         "The alert 'Your password is invalid!' should be displayed"
-        assert self.driver.current_url == self.login_page.URL, \
-        f"The Login page should be opened but now {self.driver.current_url}"
-
+    
     def test_20_Password_is_masked(self):
         assert self.login_page.is_password_hidden() == True, \
         f"The input type should be password, if True, then Password characters is hidden, but now it's {self.login_page.is_password_hidden()} "
