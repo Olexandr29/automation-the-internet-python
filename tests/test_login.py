@@ -1,4 +1,6 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import os
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.secure_page import SecurePage
@@ -14,7 +16,14 @@ class TestLogin:
     def setup_method(self, method):
         test_name = method.__name__
         print(f"==========-=========The {test_name} is started==========-=========")
-        self.driver = webdriver.Chrome()
+        options = Options()
+        options.add_argument("--incognito")
+        if os.environ.get("GITHUB_ACTIONS") == "true":
+            options.add_argument("--headless=new")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+
+        self.driver = webdriver.Chrome(options=options)
         self.home_page = HomePage(self.driver)
         self.driver.get(self.home_page.URL)
         self.login_page = self.home_page.open_login_page()
