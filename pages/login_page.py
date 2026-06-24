@@ -1,73 +1,63 @@
 from selenium.webdriver.common.by import By
+from pages.base_page import BasePage
 
 
-class LoginPage:
+class LoginPage(BasePage):
     URL = "https://the-internet.herokuapp.com/login"
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
         self.locators = {
             "username" : (By.ID, "username"),
             "password" : (By.ID, "password"),
             "login_button" : (By.CLASS_NAME, "radius"),
             "alert" : (By.ID, "flash")
         }
-
+ 
     def successful_login(self, name, pas):
         from pages.secure_page import SecurePage
-        username_el = self.driver.find_element(*self.locators["username"])
-        password_el = self.driver.find_element(*self.locators["password"])
-        login_btn_el = self.driver.find_element(*self.locators["login_button"])
-        password_el.send_keys(pas)
-        username_el.send_keys(name)
-        login_btn_el.click()
+        self.type(self.locators["username"], name)
+        self.type(self.locators["password"], pas)
+        self.click(self.locators["login_button"])
         return SecurePage(self.driver)
     
     def unsuccessful_login(self, name, pas):
-        username_el = self.driver.find_element(*self.locators["username"])
-        password_el = self.driver.find_element(*self.locators["password"])
-        login_btn_el = self.driver.find_element(*self.locators["login_button"])
         if name == "" and pas == "" :
             print("the username and password empty")
         elif name == "" :
             print("the username is empty")
-            password_el.send_keys(pas)
+            self.type(self.locators["password"], pas)
         elif pas == "" :
             print("the password is empty")
-            username_el.send_keys(name)
+            self.type(self.locators["username"], name)
         else :
             print("niether username nor password is empty")
-            username_el.send_keys(name)
-            password_el.send_keys(pas)
-        login_btn_el.click()
-        alert_el = self.driver.find_element(*self.locators["alert"])
-        alert_msg = alert_el.text
+            self.type(self.locators["username"], name)
+            self.type(self.locators["password"], pas)
+
+        self.click(self.locators["login_button"])   
+        alert_msg = self.get_text(self.locators["alert"])
         print(f"the alert message is '{alert_msg}'")
         return alert_msg
     
     def get_alert_message(self):
-        alert_el = self.driver.find_element(*self.locators["alert"])
-        alert_msg = alert_el.text
+        alert_msg = self.get_text(self.locators["alert"])
         print(f"The alert message is '{alert_msg}' ")
         return alert_msg
     
     def is_login_button_displayed(self):
-        login_btn_el = self.driver.find_element(*self.locators["login_button"])
-        result = login_btn_el.is_displayed()
+        result = self.is_visible(self.locators["login_button"])
         print(f"Is login button displayed = {result}")
         return result
     
     def is_password_hidden(self):
-        password_el = self.driver.find_element(*self.locators["password"])
+        password_el = self.find(self.locators["password"])
         password_input_type = password_el.get_attribute("type")
         print(f"The password input type is '{password_input_type}'")
         return password_input_type == "password"
 
     def is_masked_value_saved(self, pas):
-        password_el = self.driver.find_element(*self.locators["password"])
-        password_el.send_keys(pas)
-        entered_value = password_el.get_attribute("value")
+        pas_element = self.find(self.locators["password"])
+        pas_element.send_keys(pas)
+        entered_value = pas_element.get_attribute("value")
         print(f"Here is the filled in password '{pas}' and the saved value '{entered_value}'")
         return entered_value == pas
-
-
-
