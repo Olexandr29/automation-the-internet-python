@@ -21,6 +21,14 @@ jobs:
         run: |
             pip install selenium
             pip install pytest
+            pip install allure-pytest
       
-      - name: Run tests with Pytest
-        run: pytest -s
+      - name: Run tests with Allure
+        run: pytest -s --alluredir=allure-results
+    
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
