@@ -1,13 +1,9 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-import os
-from pages.home_page import HomePage
+import pytest
+from tests.base_test import BaseTest
 from pages.login_page import LoginPage
 from pages.secure_page import SecurePage
-import pytest
 
-
-class TestLogin:
+class TestLogin(BaseTest):
     valid_username = "tomsmith"
     valid_password = "SuperSecretPassword!"
     invalid_urername = "just_name"
@@ -17,25 +13,7 @@ class TestLogin:
     expected_alert_username_msg = "Your username is invalid!"
     expected_alert_password_msg = "Your password is invalid!"
     expected_logout_msg = "You logged out of the secure area!"
-
-    @pytest.fixture(autouse=True)    
-    def setup_method(self, request):
-        print(f"==========-=========The {request.node.nodeid} is started==========-=========")
-        options = Options()
-        options.add_argument("--incognito")
-        if os.environ.get("GITHUB_ACTIONS") == "true":
-            options.add_argument("--headless=new")
-            options.add_argument("--no-sandbox")
-            options.add_argument("--disable-dev-shm-usage")
-
-        self.driver = webdriver.Chrome(options=options)
-        self.home_page = HomePage(self.driver)
-        self.driver.get(self.home_page.URL)
-        self.login_page = self.home_page.open_login_page()
-
-    def teardown_method(self):    
-        self.driver.quit()
-
+   
     def test_1_Successful_login(self):
         assert self.driver.current_url == self.login_page.URL
         secure_page = self.login_page.successful_login("tomsmith", "SuperSecretPassword!")
