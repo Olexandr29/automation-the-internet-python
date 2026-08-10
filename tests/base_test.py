@@ -20,7 +20,7 @@ class BaseTest:
         self.driver = webdriver.Chrome(options=options)
         self.home_page = HomePage(self.driver)
         self.driver.get(self.home_page.URL)
-        self.login_page = self.home_page.open_login_page()
+        # self.login_page = self.home_page.open_login_page()
 
     def teardown_method(self):    
         self.driver.quit()
