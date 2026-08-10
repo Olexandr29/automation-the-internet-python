@@ -1,11 +1,14 @@
 import pytest
 from tests.base_test import BaseTest
 from pages.login_page import LoginPage
-# from pages.secure_page import SecurePage
 from test_data.login_data import LoginData
 
 class TestLogin(BaseTest):
       
+    @pytest.fixture(autouse=True)
+    def setup_login_page(self, setup_test):
+        self.login_page = self.home_page.open_login_page()
+
     def test_1_Successful_login(self):
         assert self.driver.current_url == self.login_page.URL
         secure_page = self.login_page.successful_login(LoginData.VALID_USERNAME, LoginData.VALID_PASSWORD)
