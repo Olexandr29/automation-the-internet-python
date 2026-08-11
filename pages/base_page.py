@@ -28,4 +28,8 @@ class BasePage:
             return self.find(locator).is_displayed()
         except:
             return False
+
+    def press_key(self, locator, specific_key):
+        element = self.find(locator);
+        element.send_keys(specific_key)
                 

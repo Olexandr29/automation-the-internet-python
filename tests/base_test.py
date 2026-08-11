@@ -8,7 +8,7 @@ from pages.home_page import HomePage
 class BaseTest:
  
     @pytest.fixture(autouse=True)    
-    def setup_method(self, request):
+    def setup_test(self, request):
         print(f"==========-=========The {request.node.nodeid} is started==========-=========")
         options = Options()
         options.add_argument("--incognito")
@@ -20,7 +20,6 @@ class BaseTest:
         self.driver = webdriver.Chrome(options=options)
         self.home_page = HomePage(self.driver)
         self.driver.get(self.home_page.URL)
-        self.login_page = self.home_page.open_login_page()
 
-    def teardown_method(self):    
+        yield
         self.driver.quit()
