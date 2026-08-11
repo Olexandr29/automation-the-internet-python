@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import Select
 from pages.base_page import BasePage
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from utils.reporter import Reporter
 
 class DropdownPage(BasePage):
     def __init__(self, driver, timeout=10):
@@ -13,7 +14,8 @@ class DropdownPage(BasePage):
         }
 
     def open_dropdown(self):
-        self.click(self.locators["dropdownLocator"])
+        with Reporter.step("Open Dropdown"):
+            self.click(self.locators["dropdownLocator"])
 
     def is_dropdown_visible(self):
         return self.is_visible(self.locators["dropdownLocator"])
@@ -29,18 +31,22 @@ class DropdownPage(BasePage):
             available_options.append(option.text)
         return available_options
 
+    @Reporter.step("Observe all available options")
     def are_expected_options_displayed(self, expected_options):
-        result = self.get_available_options() == expected_options
-        return result
+            result = self.get_available_options() == expected_options
+            return result
 
     def select_option(self, specific_option):
-        dropdown = Select(self.find(self.locators["dropdownLocator"]))
+        with Reporter.step(f"Select: '{specific_option}' from dropdown"):
+            dropdown = Select(self.find(self.locators["dropdownLocator"]))
         return dropdown.select_by_visible_text(specific_option)
 
     def press_escape(self):
-        return self.press_key(self.locators["dropdownLocator"], Keys.ESCAPE)
+            return self.press_key(self.locators["dropdownLocator"], Keys.ESCAPE)
 
+    @Reporter.step("Focus the dropdown")
     def focus_dropdown(self):
+        # with Reporter.step("Focus the dropdown"):
         actions = ActionChains(self.driver)
         dropdown = self.find(self.locators["dropdownLocator"])
         for _ in range(10):

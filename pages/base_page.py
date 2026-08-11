@@ -1,5 +1,8 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import allure
+from utils.reporter import Reporter
+from selenium.webdriver.common.keys import Keys
 
 class BasePage:
     def __init__(self, driver, timeout=10):
@@ -29,7 +32,17 @@ class BasePage:
         except:
             return False
 
+    def get_key_name(self, key):
+        for name, value in vars(Keys).items():
+            if value == key:
+                return name
+
+        return key
+
+
     def press_key(self, locator, specific_key):
-        element = self.find(locator);
-        element.send_keys(specific_key)
+        key_name = self.get_key_name(specific_key)
+        with Reporter.step(f'Press {key_name} key'):
+            element = self.find(locator);
+            element.send_keys(specific_key)
                 

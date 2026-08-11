@@ -9,7 +9,7 @@ class BaseTest:
  
     @pytest.fixture(autouse=True)    
     def setup_test(self, request):
-        print(f"==========-=========The {request.node.nodeid} is started==========-=========")
+        # print(f"==========-=========The {request.node.nodeid} is started==========-=========")
         options = Options()
         options.add_argument("--incognito")
         if os.environ.get("GITHUB_ACTIONS") == "true":

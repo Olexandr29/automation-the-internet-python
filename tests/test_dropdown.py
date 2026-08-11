@@ -3,12 +3,15 @@ from tests.base_test import BaseTest
 from pages.dropdown_page import DropdownPage
 from pages.home_page import HomePage
 from test_data.dropdown_data import DropdownData
+import allure
+from utils.reporter import Reporter
 
 class TestDropdown(BaseTest):
 
     @pytest.fixture(autouse=True)
     def setup_dropdown_page(self, setup_test):
-        self.dropdown_page = self.home_page.open_dropdown_page()
+        with Reporter.step("Open dropdown page"):
+            self.dropdown_page = self.home_page.open_dropdown_page()
 
     def test_21_verify_default_state(self):
         assert self.driver.current_url == DropdownData.URL_DROPDOWN_PAGE, "the URL is wrong"
@@ -37,11 +40,14 @@ class TestDropdown(BaseTest):
     def test_25_change_selected_option_using_keyboard_arrow_keys(self):
         self.dropdown_page.focus_dropdown()
         assert self.dropdown_page.is_dropdown_focused(), 'The dropdown is not focused'
-        self.dropdown_page.press_arrow_down()
+        with Reporter.step(f"Select: '{DropdownData.OPTION_1}' from dropdown by"):
+            self.dropdown_page.press_arrow_down()
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The ${DropdownData.OPTION_1} is not selected via keaboard key"     
-        self.dropdown_page.press_arrow_down()
+        with Reporter.step(f"Select: '{DropdownData.OPTION_2}' from dropdown by"):
+            self.dropdown_page.press_arrow_down()
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The ${DropdownData.OPTION_2} is not became selected after pressing Arrow Down"
-        self.dropdown_page.press_arrow_up()
+        with Reporter.step(f"Select: '{DropdownData.OPTION_1}' from dropdown by"):
+            self.dropdown_page.press_arrow_up()
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The ${DropdownData.OPTION_1} is not became selected after pressing Arrow Up"
         
     def test_26_navigate_select_and_change_the_dropdown_option_using_keyboard(self):
@@ -75,16 +81,19 @@ class TestDropdown(BaseTest):
     def test_29_verify_selected_option_after_refresh(self):
         self.dropdown_page.select_option(DropdownData.OPTION_1)
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The {DropdownData.OPTION_1} is not selected"
-        self.driver.refresh()
+        with Reporter.step("Refresh the page"):
+            self.driver.refresh()
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_DEFAULT, f"The default value {DropdownData.OPTION_DEFAULT} should be selected"
 
     def test_30_verify_browser_Back_and_Forward_navigation_behaviour(self):
         self.dropdown_page.select_option(DropdownData.OPTION_2)
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not selected"
-        self.driver.back()
+        with Reporter.step("Navigate Back"):
+            self.driver.back()
         assert self.driver.current_url == self.home_page.URL, "The Home page is not opened"
         assert self.home_page.is_dropdown_link_visible(), 'The Dropdown link is not visible'
-        self.driver.forward()
+        with Reporter.step("Navigate Forward"):
+            self.driver.forward()
         assert self.driver.current_url == DropdownData.URL_DROPDOWN_PAGE, "The Dropdown page is not opened"
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not remained selected after navigating"
 
