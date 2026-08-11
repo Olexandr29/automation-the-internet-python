@@ -20,3 +20,6 @@ class HomePage(BasePage):
         from pages.dropdown_page import DropdownPage
         self.click(self.locators["dropdown_link"])
         return DropdownPage(self.driver)
+
+    def is_dropdown_link_visible(self):
+        return self.is_visible(self.locators["dropdown_link"])

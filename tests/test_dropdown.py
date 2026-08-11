@@ -44,4 +44,47 @@ class TestDropdown(BaseTest):
         self.dropdown_page.press_arrow_up()
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The ${DropdownData.OPTION_1} is not became selected after pressing Arrow Up"
         
+    def test_26_navigate_select_and_change_the_dropdown_option_using_keyboard(self):
+        self.dropdown_page.focus_dropdown()
+        assert self.dropdown_page.is_dropdown_focused(), "The  dropdown is not focused"
+        self.dropdown_page.press_enter()
+        self.dropdown_page.press_arrow_down()
+        self.dropdown_page.press_enter()
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The {DropdownData.OPTION_1} is not selected"
+        self.dropdown_page.press_arrow_down()
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not selected"
+        self.dropdown_page.press_arrow_up()
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The {DropdownData.OPTION_1} is not selected"
+
+    def test_27_verify_keyboard_arrows_on_boundary_options(self):
+        self.dropdown_page.select_option(DropdownData.OPTION_1)
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The {DropdownData.OPTION_1} is not selected"
+        self.dropdown_page.press_arrow_up()
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The {DropdownData.OPTION_1} is not remained selected"
+        self.dropdown_page.select_option(DropdownData.OPTION_2)
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not selected"
+        self.dropdown_page.press_arrow_down()
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not remained selected"
+
+    def test_28_verify_only_one_option_can_be_selected_at_a_time(self):
+        self.dropdown_page.select_option(DropdownData.OPTION_1)
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The {DropdownData.OPTION_1} is not selected"
+        self.dropdown_page.select_option(DropdownData.OPTION_2)
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not selected and the {DropdownData.OPTION_1} is still selected"
+
+    def test_29_verify_selected_option_after_refresh(self):
+        self.dropdown_page.select_option(DropdownData.OPTION_1)
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The {DropdownData.OPTION_1} is not selected"
+        self.driver.refresh()
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_DEFAULT, f"The default value {DropdownData.OPTION_DEFAULT} should be selected"
+
+    def test_30_verify_browser_Back_and_Forward_navigation_behaviour(self):
+        self.dropdown_page.select_option(DropdownData.OPTION_2)
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not selected"
+        self.driver.back()
+        assert self.driver.current_url == self.home_page.URL, "The Home page is not opened"
+        assert self.home_page.is_dropdown_link_visible(), 'The Dropdown link is not visible'
+        self.driver.forward()
+        assert self.driver.current_url == DropdownData.URL_DROPDOWN_PAGE, "The Dropdown page is not opened"
+        assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not remained selected after navigating"
 
