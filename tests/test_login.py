@@ -3,12 +3,14 @@ from tests.base_test import BaseTest
 from pages.login_page import LoginPage
 from test_data.login_data import LoginData
 
+@pytest.mark.regression
 class TestLogin(BaseTest):
       
     @pytest.fixture(autouse=True)
     def setup_login_page(self, setup_test):
         self.login_page = self.home_page.open_login_page()
 
+    @pytest.mark.smoke
     def test_1_Successful_login(self):
         assert self.driver.current_url == self.login_page.URL
         secure_page = self.login_page.successful_login(LoginData.VALID_USERNAME, LoginData.VALID_PASSWORD)
@@ -46,6 +48,7 @@ class TestLogin(BaseTest):
         assert expected_msg in actual_result
         assert self.driver.current_url == self.login_page.URL
 
+    @pytest.mark.smoke
     def test_8_Logout(self):
         secure_page = self.login_page.successful_login(LoginData.VALID_USERNAME, LoginData.VALID_PASSWORD)
         print(f"we are now on {self.driver.current_url}")
@@ -59,6 +62,7 @@ class TestLogin(BaseTest):
         assert self.login_page.is_login_button_displayed() == True, \
         "The Login button is not displayed"
     
+    @pytest.mark.smoke
     def test_9_User_cannot_access_the_Secure_Area_after_logout(self):
         secure_page = self.login_page.successful_login(LoginData.VALID_USERNAME, LoginData.VALID_PASSWORD)
         print(f"we are now on {self.driver.current_url}")
@@ -80,6 +84,7 @@ class TestLogin(BaseTest):
         assert login_page.is_login_button_displayed() == True, \
         "The Login button is not displayed, but should be!"
     
+    @pytest.mark.smoke
     def test_20_Password_is_masked(self):
         assert self.login_page.is_password_hidden() == True, \
         f"The input type should be password, if True, then Password characters is hidden, but now it's {self.login_page.is_password_hidden()} "
