@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
+from utils.reporter import Reporter
 
 
 class LoginPage(BasePage):
@@ -15,28 +16,24 @@ class LoginPage(BasePage):
  
     def successful_login(self, name, pas):
         from pages.secure_page import SecurePage
-        self.type(self.locators["username"], name)
-        self.type(self.locators["password"], pas)
-        self.click(self.locators["login_button"])
+        with Reporter.step("Fill in the Username field"):
+            self.type(self.locators["username"], name)
+        with Reporter.step("Fill in the Password field"):
+            self.type(self.locators["password"], pas)
+        with Reporter.step("Click the Login button"):
+            self.click(self.locators["login_button"])
         return SecurePage(self.driver)
     
     def unsuccessful_login(self, name, pas):
-        if name == "" and pas == "" :
-            print("the username and password empty")
-        elif name == "" :
-            print("the username is empty")
-            self.type(self.locators["password"], pas)
-        elif pas == "" :
-            print("the password is empty")
-            self.type(self.locators["username"], name)
-        else :
-            print("niether username nor password is empty")
-            self.type(self.locators["username"], name)
-            self.type(self.locators["password"], pas)
-
-        self.click(self.locators["login_button"])   
+        with Reporter.step("Fill in the Username field"):
+            if name != "":
+                self.type(self.locators["username"], name)
+        with Reporter.step("Fill in the Password field"):
+            if pas != "":
+                self.type(self.locators["password"], pas)
+        with Reporter.step("Click the Login button"):
+            self.click(self.locators["login_button"])   
         alert_msg = self.get_text(self.locators["alert"])
-        print(f"the alert message is '{alert_msg}'")
         return alert_msg
     
     def get_alert_message(self):

@@ -2,14 +2,20 @@ import pytest
 from tests.base_test import BaseTest
 from pages.login_page import LoginPage
 from test_data.login_data import LoginData
+import allure
+from utils.reporter import Reporter
 
+@allure.feature("Login")
+@allure.tag("Regression")
 @pytest.mark.regression
 class TestLogin(BaseTest):
       
     @pytest.fixture(autouse=True)
     def setup_login_page(self, setup_test):
-        self.login_page = self.home_page.open_login_page()
+        with Reporter.step("Open login page"):
+            self.login_page = self.home_page.open_login_page()
 
+    @allure.tag("Smoke")
     @pytest.mark.smoke
     def test_1_Successful_login(self):
         assert self.driver.current_url == self.login_page.URL
@@ -44,10 +50,13 @@ class TestLogin(BaseTest):
     ])
 
     def test_unsuccessful_login(self, username, password, expected_msg):
+        allure.dynamic.parameter("Username", username or "<empty>")
+        allure.dynamic.parameter("Password", "<hidden>" if password else "<empty>")
         actual_result = self.login_page.unsuccessful_login(username, password)
         assert expected_msg in actual_result
         assert self.driver.current_url == self.login_page.URL
 
+    @allure.tag("Smoke")
     @pytest.mark.smoke
     def test_8_Logout(self):
         secure_page = self.login_page.successful_login(LoginData.VALID_USERNAME, LoginData.VALID_PASSWORD)
@@ -62,6 +71,7 @@ class TestLogin(BaseTest):
         assert self.login_page.is_login_button_displayed() == True, \
         "The Login button is not displayed"
     
+    @allure.tag("Smoke")
     @pytest.mark.smoke
     def test_9_User_cannot_access_the_Secure_Area_after_logout(self):
         secure_page = self.login_page.successful_login(LoginData.VALID_USERNAME, LoginData.VALID_PASSWORD)
@@ -84,6 +94,7 @@ class TestLogin(BaseTest):
         assert login_page.is_login_button_displayed() == True, \
         "The Login button is not displayed, but should be!"
     
+    @allure.tag("Smoke")
     @pytest.mark.smoke
     def test_20_Password_is_masked(self):
         assert self.login_page.is_password_hidden() == True, \
