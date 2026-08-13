@@ -2,7 +2,7 @@
 class LoginData:
     VALID_USERNAME = "tomsmith"
     VALID_PASSWORD = "SuperSecretPassword!"
-    INVALID_URERNAME = "just_name"
+    INVALID_USERNAME = "just_name"
     INVALID_PASSWORD = "1p5T61"
     SQL_INJECTION = "' OR '1'='1"
     XSS_CROSS_SITE_SCRIPT = "<script>alert('xss')</script>"
