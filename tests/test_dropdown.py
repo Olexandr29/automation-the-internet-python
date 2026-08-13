@@ -7,7 +7,6 @@ import allure
 from utils.reporter import Reporter
 
 @allure.feature("Dropdown")
-@allure.tag("Regression")
 @pytest.mark.regression
 class TestDropdown(BaseTest):
 
@@ -16,7 +15,6 @@ class TestDropdown(BaseTest):
         with Reporter.step("Open dropdown page"):
             self.dropdown_page = self.home_page.open_dropdown_page()
 
-    @allure.tag("Smoke")
     @pytest.mark.smoke
     def test_21_verify_default_state(self):
         assert self.driver.current_url == DropdownData.URL_DROPDOWN_PAGE, "the URL is wrong"
@@ -24,7 +22,6 @@ class TestDropdown(BaseTest):
         assert self.dropdown_page.is_dropdown_visible(), "The dropdown is not visible"
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_DEFAULT, "The default selected value is not right"
 
-    @allure.tag("Smoke")
     @pytest.mark.smoke
     def test_22_verify_all_available_options_are_displayed(self):
         expected_options = [
@@ -32,14 +29,12 @@ class TestDropdown(BaseTest):
             ]
         assert self.dropdown_page.are_expected_options_displayed(expected_options), "The expected options are not displayed"
 
-    @allure.tag("Smoke")
     @pytest.mark.smoke
     @allure.severity(allure.severity_level.CRITICAL)
     def test_23_select_option_1(self):
         self.dropdown_page.select_option(DropdownData.OPTION_1)
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_1, f"The {DropdownData.OPTION_1} is not selected"
 
-    @allure.tag("Smoke")
     @pytest.mark.smoke
     @allure.severity(allure.severity_level.CRITICAL)
     def test_24_Verify_option_remains_selected_after_reopening_and_closing(self):
