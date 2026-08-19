@@ -2,22 +2,31 @@ import pytest
 from tests.base_test import BaseTest
 from pages.checkbox_page import CheckboxPage
 from test_data.checkbox_data import CheckboxData
+import allure
+from utils.reporter import Reporter
 
+@allure.feature("Checkbox")
+@pytest.mark.regression
 class TestCheckbox(BaseTest):
 
     @pytest.fixture(autouse=True)
     def setup_checkbox_page(self, setup_test):
-        self.checkbox_page = self.home_page.open_checkbox_page()
+        with Reporter.step("Open checkbox page"):
+            self.checkbox_page = self.home_page.open_checkbox_page()
 
+    @pytest.mark.smoke
     def test_31_verify_checkboxes_visible(self):
         assert self.driver.current_url == CheckboxData.URL_CHECKBOX_PAGE, "The Checkboxes page is not opened"
-        assert self.checkbox_page.is_checkbox_visible(1) == True, f"The {CheckboxData.CHECKBOX_1} is not visible"
-        assert self.checkbox_page.is_checkbox_visible(2) == True, f"The {CheckboxData.CHECKBOX_2} is not visible"
+        with Reporter.step("Observe checkboxes are visible"):
+            assert self.checkbox_page.is_checkbox_visible(1) == True, f"The {CheckboxData.CHECKBOX_1} is not visible"
+            assert self.checkbox_page.is_checkbox_visible(2) == True, f"The {CheckboxData.CHECKBOX_2} is not visible"
 
     def test_32_verify_checkboxes_initial_state(self):
-        assert self.checkbox_page.is_checkbox_checked(1) == False, f"The {CheckboxData.CHECKBOX_1} is not unchecked"
-        assert self.checkbox_page.is_checkbox_checked(2) == True, f"The {CheckboxData.CHECKBOX_2} is not checked"
+        with Reporter.step("Observe checkboxes initial state"):
+            assert self.checkbox_page.is_checkbox_checked(1) == False, f"The {CheckboxData.CHECKBOX_1} is not unchecked"
+            assert self.checkbox_page.is_checkbox_checked(2) == True, f"The {CheckboxData.CHECKBOX_2} is not checked"
 
+    @pytest.mark.smoke
     def test_33_verify_checkboxes_state_changes_correctly(self):
         self.checkbox_page.check_specific_checkbox(1)
         assert self.checkbox_page.is_checkbox_checked(1) == True, f"The {CheckboxData.CHECKBOX_1} is not checked after first click"
@@ -32,7 +41,8 @@ class TestCheckbox(BaseTest):
         self.checkbox_page.check_specific_checkbox(1)
         assert self.checkbox_page.is_checkbox_checked(1) == True, f"The {CheckboxData.CHECKBOX_1} is not checked"
         assert self.checkbox_page.is_checkbox_checked(2) == True, f"The {CheckboxData.CHECKBOX_2} is not checked"
-        self.driver.refresh()
+        with Reporter.step("Refresh the page"):
+            self.driver.refresh()
         assert self.checkbox_page.is_checkbox_checked(1) == False, f"The {CheckboxData.CHECKBOX_1} is checked"
         assert self.checkbox_page.is_checkbox_checked(2) == True, f"The {CheckboxData.CHECKBOX_2} is not checked"
 

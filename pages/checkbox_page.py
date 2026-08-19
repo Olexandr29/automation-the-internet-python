@@ -2,12 +2,12 @@ from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from utils.reporter import Reporter
 
 class CheckboxPage(BasePage):
     def __init__(self, driver, timeout=10):
         super().__init__(driver, timeout)
         self.locators = {
-            # "checkboxes": (By.ID, "checkboxes")
             "checkboxes": (By.CSS_SELECTOR, "#checkboxes input[type='checkbox']")
         }
 
@@ -20,12 +20,13 @@ class CheckboxPage(BasePage):
         return checkbox.is_selected()
 
     def check_specific_checkbox(self, checkbox_number):
-        checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
+        with Reporter.step(f"Check/uncheck the checkbox {checkbox_number}"):
+            checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
         return checkbox.click()
 
-    # @Reporter.step("Focus the checkbox")
     def focus_checkbox(self, checkbox_number):  
-        checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
+        with Reporter.step(f"Focus the checkbox {checkbox_number}"):
+            checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
         return self.focus_element(checkbox)
     
     def is_checkbox_focused(self, checkbox_number):
@@ -35,7 +36,6 @@ class CheckboxPage(BasePage):
     def press_space(self, checkbox_number):
         checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
         return self.press_key_on_element(checkbox, Keys.SPACE)
-    # checkbox.send_keys(Keys.SPACE)
 
         
        
