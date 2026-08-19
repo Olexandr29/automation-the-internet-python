@@ -12,39 +12,30 @@ class CheckboxPage(BasePage):
         }
 
     def is_checkbox_visible(self, checkbox_number):
-        checkboxes = self.driver.find_elements(*self.locators["checkboxes"])
-        if checkbox_number > len(checkboxes):
-            return False
-        return checkboxes[checkbox_number - 1].is_displayed()
+        checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
+        return checkbox.is_displayed()
 
     def is_checkbox_checked(self, checkbox_number):
-        checkboxes = self.driver.find_elements(*self.locators["checkboxes"])
-        return checkboxes[checkbox_number - 1].is_selected()
+        checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
+        return checkbox.is_selected()
 
     def check_specific_checkbox(self, checkbox_number):
-        checkboxes = self.driver.find_elements(*self.locators["checkboxes"])
-        return checkboxes[checkbox_number - 1].click()
+        checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
+        return checkbox.click()
 
     # @Reporter.step("Focus the checkbox")
-    def focus_checkbox(self, checkbox_number):
-        actions = ActionChains(self.driver)
-        checkboxes = self.driver.find_elements(*self.locators["checkboxes"])
-        target_checkbox = checkboxes[checkbox_number - 1]
-
-        for _ in range(10):
-            active_element = self.driver.switch_to.active_element
-            if active_element == target_checkbox:
-                return 
-            actions.send_keys(Keys.TAB).perform()
-   
+    def focus_checkbox(self, checkbox_number):  
+        checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
+        return self.focus_element(checkbox)
+    
     def is_checkbox_focused(self, checkbox_number):
-        focused = self.driver.switch_to.active_element
-        checkboxes = self.driver.find_elements(*self.locators["checkboxes"])
-        return focused == checkboxes[checkbox_number - 1]
+        checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
+        return self.is_element_focused(checkbox)
 
     def press_space(self, checkbox_number):
-        checkboxes = self.driver.find_elements(*self.locators["checkboxes"])
-        checkboxes[checkbox_number - 1].send_keys(Keys.SPACE)
+        checkbox = self.find_element_by_number(self.locators["checkboxes"], checkbox_number)
+        return self.press_key_on_element(checkbox, Keys.SPACE)
+    # checkbox.send_keys(Keys.SPACE)
 
         
        
