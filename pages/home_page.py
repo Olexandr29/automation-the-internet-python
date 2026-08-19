@@ -8,7 +8,8 @@ class HomePage(BasePage):
         super().__init__(driver)
         self.locators = {
             "login_link" : (By.LINK_TEXT, "Form Authentication"),
-            "dropdown_link" : (By.LINK_TEXT, "Dropdown")
+            "dropdown_link" : (By.LINK_TEXT, "Dropdown"),
+            "checkbox_link" : (By.LINK_TEXT, "Checkboxes")
         }
         
     def open_login_page(self):
@@ -23,3 +24,8 @@ class HomePage(BasePage):
 
     def is_dropdown_link_visible(self):
         return self.is_visible(self.locators["dropdown_link"])
+
+    def open_checkbox_page(self):
+        from pages.checkbox_page import CheckboxPage
+        self.click(self.locators["checkbox_link"])
+        return CheckboxPage(self.driver)

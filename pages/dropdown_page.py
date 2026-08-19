@@ -10,7 +10,6 @@ class DropdownPage(BasePage):
         super().__init__(driver, timeout)
         self.locators = {
             "dropdownLocator" : (By.ID, "dropdown"),
-
         }
 
     def open_dropdown(self):
@@ -46,19 +45,12 @@ class DropdownPage(BasePage):
 
     @Reporter.step("Focus the dropdown")
     def focus_dropdown(self):
-        # with Reporter.step("Focus the dropdown"):
-        actions = ActionChains(self.driver)
         dropdown = self.find(self.locators["dropdownLocator"])
-        for _ in range(10):
-            active_element = self.driver.switch_to.active_element
-            if active_element == dropdown:
-                return
-            actions.send_keys(Keys.TAB).perform()
-
+        return self.focus_element(dropdown)
+    
     def is_dropdown_focused(self):
-        focused = self.driver.switch_to.active_element
         dropdown = self.find(self.locators["dropdownLocator"])
-        return focused == dropdown
+        return self.is_element_focused(dropdown)
 
     def press_arrow_down(self):
         return self.press_key(self.locators["dropdownLocator"], Keys.ARROW_DOWN)
