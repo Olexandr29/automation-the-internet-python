@@ -29,7 +29,11 @@ class TestCheckbox(BaseTest):
     @pytest.mark.smoke
     def test_33_verify_checkboxes_state_changes_correctly(self):
         self.checkbox_page.check_specific_checkbox(1)
-        assert self.checkbox_page.is_checkbox_checked(1) == True, f"The {CheckboxData.CHECKBOX_1} is not checked after first click"
+        # verify screenshot on failure, change the expected result for next test from True to False
+        assert self.checkbox_page.is_checkbox_checked(1) == False, f"The {CheckboxData.CHECKBOX_1} is not checked after first click"
+
+        # assert self.checkbox_page.is_checkbox_checked(1) == True, f"The {CheckboxData.CHECKBOX_1} is not checked after first click"
+
         self.checkbox_page.check_specific_checkbox(1)
         assert self.checkbox_page.is_checkbox_checked(1) == False, f"The {CheckboxData.CHECKBOX_1} is not unchecked after second click"
         self.checkbox_page.check_specific_checkbox(2)
