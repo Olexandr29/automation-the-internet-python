@@ -4,7 +4,6 @@ from utils.reporter import Reporter
 
 
 class LoginPage(BasePage):
-    URL = "https://the-internet.herokuapp.com/login"
     def __init__(self, driver):
         super().__init__(driver)
         self.locators = {
@@ -38,23 +37,19 @@ class LoginPage(BasePage):
     
     def get_alert_message(self):
         alert_msg = self.get_text(self.locators["alert"])
-        print(f"The alert message is '{alert_msg}' ")
         return alert_msg
     
     def is_login_button_displayed(self):
         result = self.is_visible(self.locators["login_button"])
-        print(f"Is login button displayed = {result}")
         return result
     
     def is_password_hidden(self):
         password_el = self.find(self.locators["password"])
         password_input_type = password_el.get_attribute("type")
-        print(f"The password input type is '{password_input_type}'")
         return password_input_type == "password"
 
     def is_masked_value_saved(self, pas):
         pas_element = self.find(self.locators["password"])
         pas_element.send_keys(pas)
         entered_value = pas_element.get_attribute("value")
-        print(f"Here is the filled in password '{pas}' and the saved value '{entered_value}'")
         return entered_value == pas
