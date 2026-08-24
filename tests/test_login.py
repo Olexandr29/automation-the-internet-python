@@ -1,5 +1,4 @@
-import pytest
-from tests.base_test import BaseTest
+from tests.base_test import BaseTest, pytest
 from pages.login_page import LoginPage
 from test_data.login_data import LoginData
 import allure

@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
-from pages.base_page import BasePage
-from utils.reporter import Reporter
+from pages.base_page import BasePage, Reporter
 
 
 class LoginPage(BasePage):
