@@ -1,8 +1,7 @@
-from pages.base_page import BasePage
+from pages.base_page import BasePage, Reporter
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-from utils.reporter import Reporter
 
 class CheckboxPage(BasePage):
     def __init__(self, driver, timeout=10):

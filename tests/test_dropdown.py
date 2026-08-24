@@ -1,5 +1,4 @@
-import pytest
-from tests.base_test import BaseTest
+from tests.base_test import BaseTest, pytest
 from pages.dropdown_page import DropdownPage
 from pages.home_page import HomePage
 from test_data.dropdown_data import DropdownData

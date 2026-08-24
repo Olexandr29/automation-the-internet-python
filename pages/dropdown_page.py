@@ -1,9 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from pages.base_page import BasePage
+from pages.base_page import BasePage, Reporter
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-from utils.reporter import Reporter
 
 class DropdownPage(BasePage):
     def __init__(self, driver, timeout=10):

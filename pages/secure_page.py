@@ -2,7 +2,6 @@ from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
 class SecurePage(BasePage):
-    URL = "https://the-internet.herokuapp.com/secure"
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -14,17 +13,14 @@ class SecurePage(BasePage):
 
     def get_alert_message(self):
         alert_msg = self.get_text(self.locators["alert"])
-        print(f"The alert message is '{alert_msg}' ")
         return alert_msg
     
     def get_welcome_message(self):
         message = self.get_text(self.locators["welcome_message"])
-        print(f"the welcome message is '{message}'")
         return message
     
     def is_logout_button_displayed(self):
         result = self.is_visible(self.locators["logout_button"])
-        print(f"Is logout button displayed = {result}")
         return result
     
     def logout_method(self):

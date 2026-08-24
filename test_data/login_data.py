@@ -9,3 +9,6 @@ class LoginData:
     EXPECTED_ALERT_USERNAME_MSG = "Your username is invalid!"
     EXPECTED_ALERT_PASSWORD_MSG = "Your password is invalid!"
     EXPECTED_LOGOUT_MSG = "You logged out of the secure area!"
+    URL_LOGIN_PAGE = "https://the-internet.herokuapp.com/login"
+    URL_SECURE_PAGE = "https://the-internet.herokuapp.com/secure"
+

@@ -1,5 +1,4 @@
-import pytest
-from tests.base_test import BaseTest
+from tests.base_test import BaseTest, pytest
 from pages.checkbox_page import CheckboxPage
 from test_data.checkbox_data import CheckboxData
 import allure
