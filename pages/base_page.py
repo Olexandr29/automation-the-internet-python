@@ -5,8 +5,10 @@ from utils.reporter import Reporter
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
+DEFAULT_TIMEOUT_SECONDS = 10
+
 class BasePage:
-    def __init__(self, driver, timeout=10):
+    def __init__(self, driver, timeout = DEFAULT_TIMEOUT_SECONDS):
         self.driver = driver
         self.wait = WebDriverWait(driver, timeout)
 
