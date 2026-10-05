@@ -1,5 +1,6 @@
 from tests.base_test import BaseTest, pytest
 from pages.broken_images_page import BrokenImagesPage
+import pytest_check as check
 
 class TestBrokenImages(BaseTest):
 
@@ -17,3 +18,9 @@ class TestBrokenImages(BaseTest):
         assert self.broken_images_page.get_footer_text() == "Powered by Elemental Selenium", f"The footer text is not 'Powered by Elemental Selenium' but equal {self.broken_images_page.get_footer_text()}"
         assert self.broken_images_page.is_footer_link_displayed() is True, "The footer link is not displayed"
         assert self.broken_images_page.get_footer_link_text() == "Elemental Selenium", f"The link text is not 'Elemental Selenium' but equal {self.broken_images_page.get_footer_link_text}"
+
+    def test_TC37_verify_image_loading(self):
+        check.is_true(self.broken_images_page.is_img_loaded(1), "The first image has broken image indicator or missing image placeholder")
+        check.is_true(self.broken_images_page.is_img_loaded(2) is True, "The second image has broken image indicator or missing image placeholder")
+        check.is_true(self.broken_images_page.is_img_loaded(3) is True, "The third image has broken image indicator or missing image placeholder")
+                        

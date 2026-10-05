@@ -44,4 +44,9 @@ class BrokenImagesPage(BasePage):
         footer_link_element = self.driver.find_element(*self.locators["footer_link"])
         return footer_link_element.text
 
+    def is_img_loaded(self, img_number):
+        target_img = self.find_element_by_number(*self.locators["imgs"], img_number)
+        return self.driver.execute_script(
+            "return argument[0].complete && argument[0].naturalWidth > 0;", target_img)
+    
     
