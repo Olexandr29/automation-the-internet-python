@@ -1,3 +1,5 @@
+[![Run tests on Linux](https://github.com/Olexandr29/automation-the-internet-python/actions/workflows/first_flow.yml/badge.svg)](https://github.com/Olexandr29/automation-the-internet-python/actions/workflows/first_flow.yml)
+
 # Python UI Test Automation Framework for the Internet
 The goal of the repository and the project in general is to strengthen Python programming skills and gain practical experience out of tutorial-based learning but also with realistic web applications(app) with standard web elements that are commonly used across most web apps and across different business domains.
 
