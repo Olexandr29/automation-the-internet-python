@@ -9,7 +9,8 @@ class HomePage(BasePage):
         self.locators = {
             "login_link" : (By.LINK_TEXT, "Form Authentication"),
             "dropdown_link" : (By.LINK_TEXT, "Dropdown"),
-            "checkbox_link" : (By.LINK_TEXT, "Checkboxes")
+            "checkbox_link" : (By.LINK_TEXT, "Checkboxes"),
+            "brocken_images_link" : (By.LINK_TEXT, "Broken Images")
         }
         
     def open_login_page(self):
@@ -29,3 +30,8 @@ class HomePage(BasePage):
         from pages.checkbox_page import CheckboxPage
         self.click(self.locators["checkbox_link"])
         return CheckboxPage(self.driver)
+
+    def open_broken_images_page(self):
+        from pages.broken_images_page import BrokenImagesPage
+        self.click(self.locators["brocken_images_link"])
+        return BrokenImagesPage(self.driver)
