@@ -3,6 +3,7 @@ from pages.broken_images_page import BrokenImagesPage
 import pytest_check as check
 from test_data.broken_images_data import BrokenImagesData
 
+@pytest.mark.regression
 class TestBrokenImages(BaseTest):
 
     @pytest.fixture(autouse=True)
@@ -20,6 +21,7 @@ class TestBrokenImages(BaseTest):
         assert self.broken_images_page.is_footer_link_displayed() is True, "The footer link is not displayed"
         assert self.broken_images_page.get_footer_link_text() == BrokenImagesData.FOOTER_LINK, f"The link text is not '{BrokenImagesData.FOOTER_LINK}' but equal {self.broken_images_page.get_footer_link_text}"
 
+    @pytest.mark.smoke
     def test_TC37_verify_image_loading(self):
         check.is_true(self.broken_images_page.is_img_loaded(1), BrokenImagesData.WARNING(1))
         check.is_true(self.broken_images_page.is_img_loaded(2), BrokenImagesData.WARNING(2))
