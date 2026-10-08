@@ -68,6 +68,14 @@ jobs:
       
       - name: Run tests with Allure
         run: pytest -s --alluredir=allure-results
+      
+      - name: Debug for Allure results
+        if: always()
+        run: |
+          echo "=== Allure results ==="
+          ls -la allure-results
+          echo "=== Result files ==="
+          find allure-results -type f
     
       - name: Configure Allure environment
         if: always()
