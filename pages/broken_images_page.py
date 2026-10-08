@@ -13,43 +13,34 @@ class BrokenImagesPage(BasePage):
             "footer_link" : (By.LINK_TEXT, "Elemental Selenium")
         }
 
-    def text_for_steps(self, verified_part):
-        return f"Observe the {verified_part} visibillity"
-
     def get_document_ready_state(self):
         ready_state = self.driver.execute_script("return document.readyState")
         return ready_state 
 
     def is_header_displayed(self):
-            with Reporter.step(self.text_for_steps("Header")):
-                header_element = self.driver.find_element(*self.locators["header"])
-                return header_element.is_displayed()
-    
+            with Reporter.step("Observe the Header visibillity"):
+                return self.is_visible(self.locators["header"])
+
     def get_header_text(self):
-        header_element = self.driver.find_element(*self.locators["header"])
-        return header_element.text
+        return self.get_text(self.locators["header"])
 
     def get_imgs_amount(self):
-        img_elements = self.driver.find_elements(*self.locators["imgs"])
+        img_elements = self.find_elements(self.locators["imgs"])
         return len(img_elements)
 
     def is_footer_displayed(self):
-        with Reporter.step(self.text_for_steps("Footer")):
-            footer_element = self.driver.find_element(*self.locators["footer"])
-            return footer_element.is_displayed()
+        with Reporter.step("Observe the Footer visibillity"):
+            return self.is_visible(self.locators["footer"])
     
     def get_footer_text(self):
-        footer_element = self.driver.find_element(*self.locators["footer"])
-        return footer_element.text
+        return self.get_text(self.locators["footer"])
 
     def is_footer_link_displayed(self):
-        with Reporter.step(self.text_for_steps("Footer Link")):
-            footer_link_element = self.driver.find_element(*self.locators["footer_link"])
-            return footer_link_element.is_displayed()
+        with Reporter.step("Observe the Footer Link visibillity"):
+            return self.is_visible(self.locators["footer_link"])
 
     def get_footer_link_text(self):
-        footer_link_element = self.driver.find_element(*self.locators["footer_link"])
-        return footer_link_element.text
+        return self.get_text(self.locators["footer_link"])
 
     def is_img_loaded(self, img_number):
         with Reporter.step(f"Observe the image {img_number} is displayed correctly"):

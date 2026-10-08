@@ -19,7 +19,7 @@ class TestBrokenImages(BaseTest):
         assert self.broken_images_page.get_document_ready_state() == "complete", f"The document readyState is not 'complete', but now the state is {self.broken_images_page.get_document_ready_state()}"
         assert self.broken_images_page.is_header_displayed() is True, f"The '{BrokenImagesData.HEADER}' header is not displayed"
         assert self.broken_images_page.get_header_text() == BrokenImagesData.HEADER, f"The header text is not '{BrokenImagesData.HEADER}' but equal {self.broken_images_page.get_header_text}"
-        with Reporter.step(self.broken_images_page.text_for_steps("Images")):
+        with Reporter.step("Observe the Images amount"):
             assert self.broken_images_page.get_imgs_amount() == BrokenImagesData.IMGS_AMOUNT, f"{BrokenImagesData.IMGS_AMOUNT} image elements are not displayed, but found = {self.broken_images_page.get_imgs_amount()}"
         assert self.broken_images_page.is_footer_displayed() is True, "The footer is not displayed"
         assert self.broken_images_page.get_footer_text() == BrokenImagesData.FOOTER, f"The footer text is not '{BrokenImagesData.FOOTER}' but equal {self.broken_images_page.get_footer_text()}"
