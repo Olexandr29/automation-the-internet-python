@@ -49,6 +49,7 @@ jobs:
         run: |
             pip install selenium
             pip install pytest
+            pip install pytest-check
             pip install allure-pytest
       
       - name: Restore Allure history
