@@ -51,12 +51,59 @@ jobs:
             pip install pytest
             pip install allure-pytest
       
+      - name: Restore Allure history
+        uses: actions/cache/restore@v4
+        with:
+          path: allure-report/history
+          key: allure-history-${{ github.ref_name }}-${{ github.run_number }}
+          restore-keys:
+            allure-history-${{ github.ref_name }}-
+      
+      - name: Prepare Allure history
+        run: |
+          if [ -d "allure-report/history" ]; then
+            mkdir -p allure-results/history
+            cp -R allure-report/history/. allure-results/history/
+          fi
+      
       - name: Run tests with Allure
         run: pytest -s --alluredir=allure-results
     
+      - name: Configure Allure environment
+        if: always()
+        run: |
+            cat > allure-results/environment.properties << EOF
+            execution = GitHub Actions
+            os_platform = Linux
+            os_version = Ubuntu
+            python_version = $(python --version)
+            browser = Chrome
+            EOF
+      
+      - name: Configure Allure executor
+        if: always()
+        run: |
+          cat > allure-results/executor.json << EOF
+          {
+            "reportName": "GitHub Actions Allure Report",
+            "name": "GitHub Actions",
+            "type": "github",
+            "buildName": "Run #${{ github.run_number }}",
+            "buildOrder": ${{ github.run_number }},
+            "buildUrl": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }
+          EOF
+
       - name: Generate Allure report
         if: always()
         run: allure generate allure-results -o allure-report --clean
+
+      - name: Save Allure history
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: allure-report/history
+          key: allure-history-${{ github.ref_name }}-${{ github.run_number }}
       
       - name: Upload Allure Results
         if: always()
