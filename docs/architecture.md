@@ -272,10 +272,38 @@ GitHub Pages
 See the [published Allure report](https://olexandr29.github.io/automation-the-internet-js/) for an example of the reporting output.
 
 </details>
-
-
-
-
 </details>
 
+<details><summary><b>Test Execution Flow</b></summary>
 
+The Python framework uses `pytest` fixtures to manage browser initialization, page navigation, and browser cleanup. Each test starts a new ChromeDriver session, initializes the `HomePage` Page Object, opens the Home Page, and navigates to the required page through the corresponding Page Object method.
+
+**Test Layer**
+
+```text
+BaseTest.setup_test (autouse fixture)
+↓
+Configure Chrome options
+↓
+Create ChromeDriver
+↓
+Initialize HomePage
+↓
+Open Home Page
+↓
+yield control to the test
+↓
+Test-specific fixture
+   └─ Open the required Page Object
+↓
+Test scenario
+   └─ Execute test methods and verify expected results
+↓
+pytest_runtest_makereport (conftest.py)
+   └─ Attach a screenshot to Allure if the test call fails
+↓
+BaseTest.setup_test teardown
+   └─ driver.quit()
+```
+
+</details>
