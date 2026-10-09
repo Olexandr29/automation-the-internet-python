@@ -34,19 +34,18 @@ automation-the-internet-python
 
 **Main Directories and Files**
 | Directory / File     | Responsibility                                                                           |
-| -------------------- | ---------------------------------------------------------------------------------------- |
+| -------------------- |----------------------------------------------------------------------------------------- |
 | `.github/workflows/` | Contains GitHub Actions workflow definitions for automated test execution and reporting. |
 | `docs/`              | Contains project documentation, including architecture documentation.                    |
 | `pages/`             | Contains Page Object classes responsible for page-specific UI interactions.              |
 | `tests/`             | Contains automated test classes that define test scenarios and assertions.               |
-| `test_data/`         | Contains test data used by automated tests.                                              |
+| `test_data/`         | Contains test data and expected values used by automated tests.                          |
 | `utils/`             | Contains reusable utilities and the script for generating Allure reports locally.        |
 | `.gitignore`         | Specifies files and directories that should not be tracked by Git.                       |
 | `pytest.ini`         | Contains pytest configuration settings.                                                  |
 | `README.md`          | Contains the project overview, technology stack, structure, and usage instructions.      |
 
 </details>
-
 
 
 <details><summary><b>Components and Responsibilities</b></summary>
@@ -67,7 +66,6 @@ It provides shared functionality for:
 - Keyboard and browser navigation operations;
 - Logging through the custom Logger utility;
 - Reporter — provides reusable test steps with console logging and optional Allure integration.
-
 
 The class reduces duplication across Page Objects by centralizing common browser interaction functionality.
 
@@ -94,14 +92,14 @@ The test layer contains automated test scenarios that verify the expected behavi
 
 The test layer is implemented using **pytest** and follows the Page Object Model approach. Test classes interact with Page Objects instead of directly locating and manipulating web elements.
 
-| Component        | Responsibility                                                                                                            |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `BaseTest (base_test.py)`       | Provides shared test setup, Chrome WebDriver initialization, browser configuration, initial navigation to the aplication home page, and browser cleanup.            |
+| Component        | Responsibility                                                                                       |
+| ---------------- |-------------------------------------------------------------------------------------------------------------------- |
+| `BaseTest (base_test.py)`       | Provides shared test setup, Chrome WebDriver initialization, browser configuration, initial navigation to the application home page, and browser cleanup.            |
 | `conftest.py`       | Implements a pytest test-reporting hook that attaches a screenshot to the Allure report when a test fails during its execution phase.       |
-| `TestLogin (test_login.py)`      | Verifies successful and unsuccessful login scenarios, logout behavior, secure area access after logout, and password field maskig.   |
+| `TestLogin (test_login.py)`      | Verifies successful and unsuccessful login scenarios, logout behavior, secure area access after logout, and password field masking.   |
 | `TestDropdown (test_dropdown.py)`   | Verifies dropdown visibility, available options, option selection, keyboard interaction, and browser navigation behavior. |
-| `TestCheckbox (test_checkbox)`    | Verifies checkbox visibility, initial states, state changes, behavior after refresh, and keyboard interaction.                  |
-| `TestBrokenImages (test_broken_images)` | Verifies page content, dociment readiness, header and footer elements,image count, and image loading status.                                           |
+| `TestCheckbox (test_checkbox.py)`    | Verifies checkbox visibility, initial states, state changes, behavior after refresh, and keyboard interaction.                  |
+| `TestBrokenImages (test_broken_images.py)` | Verifies page content, document readiness, header and footer elements,image count, and image loading status.                                           |
 
 Test classes use assertions to validate application behavior and are organized into logical groups such as `smoke` and `regression`.
 
@@ -118,12 +116,13 @@ Its responsibilities include:
 * Enabling headless execution in GitHub Actions;
 * Initializing the `HomePage` Page Object;
 * Opening the application home page;
-* Closing the WebDriver session after each test exectution.
+* Closing the WebDriver session after each test execution.
 
 The `setup_test` fixture uses `yield` to separate test setup from teardown. After the test finishes, `driver.quit()` closes the browser session.
 
 2) conftest.py
-`conftest.py` constains a `pytest_runtest_makereport` hook that integrates test failure handling with Allure reporting.
+
+`conftest.py` contains a `pytest_runtest_makereport` hook that integrates test failure handling with Allure reporting.
 
 Its responsibilities include:
 - Inspecting the result of each test execution phase;
@@ -135,7 +134,8 @@ Its responsibilities include:
 The screenshot is capture when test fails during its execution phase, provided the test instance exposes a `driver` attribute.
 
 3) Test Page Initialization
-Each test class defines an additional autouse fixture that depends on `setup_test`. It opens the corresponding page through the `HomePage` Page object and wraps the navigation step in `Reporte.step` for reporting.
+
+Each test class defines an additional autouse fixture that depends on `setup_test`. It opens the corresponding page through the `HomePage` Page object and wraps the navigation step in `Reporter.step` for reporting.
 
 This approach keeps browser initialization in BaseTest and page-specific navigation in the respective test classes.
 
@@ -148,8 +148,8 @@ Test data is stored in dedicated Python modules under the `test_data/` directory
 
 These modules centralize page URLs, valid and invalid input values, expected messages, and expected UI values used by the test scenarios.
 
-| Component          | Responsibility                                                                                                                                               |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Component          | Responsibility    |
+| ------------------ | ----------------- |
 | `LoginData`        | Stores valid and invalid credentials, security-related input values, expected authentication and logout messages, and page URLs.                             |
 | `DropdownData`     | Stores the dropdown page URL and expected option labels, including the default option.                                                                       |
 | `CheckboxData`     | Stores the checkboxes page URL and checkbox identifiers used in test assertions.                                                                             |
