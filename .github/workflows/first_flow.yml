@@ -1,4 +1,4 @@
-name: Run tests on Linux
+name: Run tests on Linux and deploy build
 
 on: 
     push:
@@ -12,7 +12,7 @@ on:
     workflow_dispatch:
 
     schedule:
-      - cron: '30 5 * * 1'
+      - cron: '30 5 1 * *'
 
 permissions:
   contents: read
