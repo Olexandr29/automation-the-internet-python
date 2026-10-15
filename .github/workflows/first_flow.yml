@@ -57,10 +57,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-            pip install selenium
-            pip install pytest
-            pip install pytest-check
-            pip install allure-pytest
+            pip install -r requirements.txt
       
       - name: Restore Allure history
         uses: actions/cache/restore@v4
