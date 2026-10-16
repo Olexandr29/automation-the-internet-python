@@ -13,6 +13,7 @@ Additionally this project provides an opportynity to:
 - Python
 - Selenium WebDriver
 - Pytest
+- Docker
 - GitHub Actions
 - Allure report
 ## Project Structure
