@@ -39,3 +39,12 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.get_footer_text() == "Powered by Elemental Selenium and Sauce Labs"
         assert self.dynamic_contols_page.is_elemental_selenium_link_displayed() is True
         assert self.dynamic_contols_page.is_sauce_labs_link_displayed() is True
+
+    def test_TC39_verify_checkbox_initial_state_and_changes(self):
+        assert self.dynamic_contols_page.is_checkbox_checked() is False
+        self.dynamic_contols_page.click_on_checkbox()
+        assert self.dynamic_contols_page.is_checkbox_checked() is True
+        self.dynamic_contols_page.click_on_checkbox()
+        assert self.dynamic_contols_page.is_checkbox_checked() is False
+
+

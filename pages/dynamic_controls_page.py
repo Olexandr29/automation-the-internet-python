@@ -10,6 +10,7 @@ class DynamicControlsPage(BasePage):
             "paragraph" : (By.TAG_NAME, "p"),
             "remove_add_subheader" : (By.XPATH, "//h4[text()='Remove/add']"),
             "checkbox" : (By.ID, "checkbox"),
+            "check_box" : (By.XPATH, "//input[@type='checkbox']"),
             "remove_btn" : (By.XPATH, "//button[text()='Remove']"),
             "enabel_disable_subheader" : (By.XPATH, "//h4[text()='Enable/disable']"),
             "input" : (By.XPATH, "//input[@type='text']"),
@@ -45,9 +46,11 @@ class DynamicControlsPage(BasePage):
         return self.get_text(self.locators["remove_add_subheader"])
 
     def get_amount_of_checkboxes(self):
-        checkboxes_el = self.driver.find_elements(*self.locators["checkbox"])
-        return len(checkboxes_el)
-
+        checkboxes_el = self.driver.find_elements(*self.locators["check_box"])
+        checkbox_length = len(checkboxes_el)
+        print("checkbox_length =", checkbox_length)
+        return checkbox_length
+    
     def is_checkbox_displayed(self):
         checkbox_el = self.driver.find_element(*self.locators["checkbox"])
         return checkbox_el.is_displayed()
@@ -89,3 +92,10 @@ class DynamicControlsPage(BasePage):
 
     def is_sauce_labs_link_displayed(self):
         return self.is_visible(self.locators["sauce_labs"])
+
+    def is_checkbox_checked(self):
+        checkbox_el = self.find(self.locators["check_box"])
+        return checkbox_el.is_selected()
+
+    def click_on_checkbox(self):
+        return self.click(self.locators["check_box"])
