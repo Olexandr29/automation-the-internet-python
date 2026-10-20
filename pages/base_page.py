@@ -34,8 +34,10 @@ class BasePage:
     
     def get_text(self, locator):
         element = self.find(locator)
-        return element.text
-    
+        txt = element.text
+        print("txt =", txt)
+        return txt
+
     def is_visible(self, locator):
         try:
             return self.find(locator).is_displayed()

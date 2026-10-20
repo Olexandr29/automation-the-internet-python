@@ -22,4 +22,15 @@ class TestDynamicControls(BaseTest):
 
         assert self.dynamic_contols_page.get_amount_of_checkboxes() == 1
         assert self.dynamic_contols_page.is_checkbox_displayed() is True
-        # assert self.dynamic_contols_page.get_checkbox_text() == "A checkbox"
+        assert self.dynamic_contols_page.get_checkbox_text() == "A checkbox"
+
+        assert self.dynamic_contols_page.is_remove_btn_displayed() is True
+        assert self.dynamic_contols_page.get_rmv_btn_text() == "Remove"
+
+        assert self.dynamic_contols_page.is_subheader_enabel_disable_displayed() is True
+        assert self.dynamic_contols_page.get_subheader_enabel_disable_text() == "Enable/disable"
+
+        assert self.dynamic_contols_page.is_input_displayed() is True
+
+        assert self.dynamic_contols_page.is_enable_btn_displayed() is True
+        assert self.dynamic_contols_page.get_enable_btn_text() == "Enable"

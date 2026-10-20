@@ -9,7 +9,11 @@ class DynamicControlsPage(BasePage):
             "header" : (By.XPATH, "//h4[1]"),
             "paragraph" : (By.TAG_NAME, "p"),
             "remove_add_subheader" : (By.XPATH, "//h4[text()='Remove/add']"),
-            "checkbox" : (By.XPATH, "//input[@type='checkbox']")
+            "checkbox" : (By.ID, "checkbox"),
+            "remove_btn" : (By.XPATH, "//button[text()='Remove']"),
+            "enabel_disable_subheader" : (By.XPATH, "//h4[text()='Enable/disable']"),
+            "input" : (By.XPATH, "//input[@type='text']"),
+            "enable_btn" : (By.XPATH, "//button[text()='Enable']")
 
         }
 
@@ -49,4 +53,26 @@ class DynamicControlsPage(BasePage):
     def get_checkbox_text(self):
         return self.get_text(self.locators["checkbox"])
 
+    def is_remove_btn_displayed(self):
+        remove_el = self.driver.find_element(*self.locators["remove_btn"])
+        return remove_el.is_displayed()
+
+    def get_rmv_btn_text(self):
+        return self.get_text(self.locators["remove_btn"])
+
+    def is_subheader_enabel_disable_displayed(self):
+        subheader_el = self.driver.find_element(*self.locators["enabel_disable_subheader"])
+        return subheader_el.is_displayed()
+    
+    def get_subheader_enabel_disable_text(self):
+        return self.get_text(self.locators["enabel_disable_subheader"])
+
+    def is_input_displayed(self):
+        return self.is_visible(self.locators["input"])
+
+    def is_enable_btn_displayed(self):
+        return self.is_visible(self.locators["enable_btn"])
+
+    def get_enable_btn_text(self):
+        return self.get_text(self.locators["enable_btn"])
     
