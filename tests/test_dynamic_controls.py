@@ -34,3 +34,8 @@ class TestDynamicControls(BaseTest):
 
         assert self.dynamic_contols_page.is_enable_btn_displayed() is True
         assert self.dynamic_contols_page.get_enable_btn_text() == "Enable"
+
+        assert self.dynamic_contols_page.is_footer_displayed() is True
+        assert self.dynamic_contols_page.get_footer_text() == "Powered by Elemental Selenium and Sauce Labs"
+        assert self.dynamic_contols_page.is_elemental_selenium_link_displayed() is True
+        assert self.dynamic_contols_page.is_sauce_labs_link_displayed() is True

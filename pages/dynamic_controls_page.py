@@ -13,8 +13,10 @@ class DynamicControlsPage(BasePage):
             "remove_btn" : (By.XPATH, "//button[text()='Remove']"),
             "enabel_disable_subheader" : (By.XPATH, "//h4[text()='Enable/disable']"),
             "input" : (By.XPATH, "//input[@type='text']"),
-            "enable_btn" : (By.XPATH, "//button[text()='Enable']")
-
+            "enable_btn" : (By.XPATH, "//button[text()='Enable']"),
+            "footer" : (By.XPATH, "//div[@style='text-align: center;']"),
+            "selenium" : (By.LINK_TEXT, "Elemental Selenium"),
+            "sauce_labs" : (By.LINK_TEXT, "Sauce Labs")
         }
 
     def get_document_ready_state(self):
@@ -76,3 +78,14 @@ class DynamicControlsPage(BasePage):
     def get_enable_btn_text(self):
         return self.get_text(self.locators["enable_btn"])
     
+    def is_footer_displayed(self):
+        return self.is_visible(self.locators["footer"])
+
+    def get_footer_text(self):
+        return self.get_text(self.locators["footer"])
+
+    def is_elemental_selenium_link_displayed(self):
+        return self.is_visible(self.locators["selenium"])
+
+    def is_sauce_labs_link_displayed(self):
+        return self.is_visible(self.locators["sauce_labs"])
