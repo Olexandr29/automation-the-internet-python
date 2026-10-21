@@ -39,11 +39,8 @@ class BasePage:
         return txt
 
     def is_visible(self, locator):
-        try:
-            return self.find(locator).is_displayed()
-        except:
-            return False
-
+        return self.find(locator).is_displayed()
+       
     def get_key_name(self, key):
         for name, value in vars(Keys).items():
             if value == key:
