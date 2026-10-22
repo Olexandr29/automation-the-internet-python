@@ -23,7 +23,8 @@ class DynamicControlsPage(BasePage):
             "selenium" : (By.LINK_TEXT, "Elemental Selenium"),
             "sauce_labs" : (By.LINK_TEXT, "Sauce Labs"),
             "loading" : (By.XPATH, "//div[@id='loading']"),
-            "progress_bar" : (By.XPATH, "//img[@src='/img/ajax-loader.gif']")
+            "progress_bar" : (By.XPATH, "//img[@src='/img/ajax-loader.gif']"),
+            "just_txt_of_checkbox" : (By.XPATH, "//div[text()=' A checkbox']")
         }
 
     def get_document_ready_state(self):
@@ -169,4 +170,15 @@ class DynamicControlsPage(BasePage):
     def is_text_its_gone_absent_or_hidden(self):
                 text_its_gone_elements = self.driver.find_elements(*self.locators["text_under_btn"])
                 return len(text_its_gone_elements) == 0 or not text_its_gone_elements[0].is_displayed()
-    
+
+    def is_text_from_checkbox_displayed(self):
+        return self.is_visible(self.locators["just_txt_of_checkbox"])
+
+    def get_text_from_place_where_was_checkbox(self):
+        return self.get_text(self.locators["just_txt_of_checkbox"])
+
+    def get_amount_of_text_without_checkboxes(self):
+             text_without_checkboxes_el = self.driver.find_elements(*self.locators["just_txt_of_checkbox"])
+             length = len(text_without_checkboxes_el)
+             print("length =", length)
+             return length
