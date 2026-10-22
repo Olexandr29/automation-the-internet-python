@@ -19,12 +19,14 @@ class DynamicControlsPage(BasePage):
             "enabel_disable_subheader" : (By.XPATH, "//h4[text()='Enable/disable']"),
             "input" : (By.XPATH, "//input[@type='text']"),
             "enable_btn" : (By.XPATH, "//button[text()='Enable']"),
+            "disable_btn" : (By.XPATH, "//button[text()='Disable']"),
             "footer" : (By.XPATH, "//div[@style='text-align: center;']"),
             "selenium" : (By.LINK_TEXT, "Elemental Selenium"),
             "sauce_labs" : (By.LINK_TEXT, "Sauce Labs"),
             "loading" : (By.XPATH, "//div[@id='loading']"),
             "progress_bar" : (By.XPATH, "//img[@src='/img/ajax-loader.gif']"),
-            "just_txt_of_checkbox" : (By.XPATH, "//div[text()=' A checkbox']")
+            "just_txt_of_checkbox" : (By.XPATH, "//div[text()=' A checkbox']"),
+            "btn" : (By.TAG_NAME, "button")
         }
 
     def get_document_ready_state(self):
@@ -153,23 +155,23 @@ class DynamicControlsPage(BasePage):
         return self.click(self.locators["add_btn"])
 
     def wait_until_add_btn_absent(self):
-            return WebDriverWait(self.driver, 10).until(
-                EC.invisibility_of_element_located(self.locators["add_btn"])
+        return WebDriverWait(self.driver, 10).until(
+            EC.invisibility_of_element_located(self.locators["add_btn"])
             )
     
     def is_add_btn_absent_or_hidden(self):
-            add_btn_elements = self.driver.find_elements(*self.locators["add_btn"])
-            return len(add_btn_elements) == 0 or not add_btn_elements[0].is_displayed()
+        add_btn_elements = self.driver.find_elements(*self.locators["add_btn"])
+        return len(add_btn_elements) == 0 or not add_btn_elements[0].is_displayed()
     
     
     def wait_until_text_its_gone_absent(self):
-                return WebDriverWait(self.driver, 10).until(
-                    EC.invisibility_of_element_located(self.locators["text_under_btn"])
+        return WebDriverWait(self.driver, 10).until(
+        EC.invisibility_of_element_located(self.locators["text_under_btn"])
                 )
 
     def is_text_its_gone_absent_or_hidden(self):
-                text_its_gone_elements = self.driver.find_elements(*self.locators["text_under_btn"])
-                return len(text_its_gone_elements) == 0 or not text_its_gone_elements[0].is_displayed()
+        text_its_gone_elements = self.driver.find_elements(*self.locators["text_under_btn"])
+        return len(text_its_gone_elements) == 0 or not text_its_gone_elements[0].is_displayed()
 
     def is_text_from_checkbox_displayed(self):
         return self.is_visible(self.locators["just_txt_of_checkbox"])
@@ -178,7 +180,31 @@ class DynamicControlsPage(BasePage):
         return self.get_text(self.locators["just_txt_of_checkbox"])
 
     def get_amount_of_text_without_checkboxes(self):
-             text_without_checkboxes_el = self.driver.find_elements(*self.locators["just_txt_of_checkbox"])
-             length = len(text_without_checkboxes_el)
-             print("length =", length)
-             return length
+        text_without_checkboxes_el = self.driver.find_elements(*self.locators["just_txt_of_checkbox"])
+        length = len(text_without_checkboxes_el)
+        print("length =", length)
+        return length
+
+    def is_input_field_enabeled(self):
+        return self.find(self.locators["input"]).is_enabled()
+
+    def click_on_enable_btn(self):
+        return self.click(self.locators["enable_btn"])
+
+    def wait_until_enable_btn_absent(self):
+            return WebDriverWait(self.driver, 10).until(
+                EC.invisibility_of_element_located(self.locators["enable_btn"])
+                )
+
+    def is_btn_displayed(self, button_number):
+        return self.find_element_by_number(self.locators["btn"], button_number)
+
+    def get_btn_text(self, button_number):
+        target_btn = self.find_element_by_number(self.locators["btn"], button_number)
+        return target_btn.text
+    
+    def wait_until_input_is_clickable(self):
+        return WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.locators["input"]))
+
+    

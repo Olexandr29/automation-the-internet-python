@@ -174,6 +174,22 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.get_text_under_btn() == "It's back!"
 
 
+    def test_TC42_enable_and_disable_the_Input_field(self):
+        assert self.dynamic_contols_page.is_input_field_enabeled() is False
+        
+        self.dynamic_contols_page.click_on_enable_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_input_is_clickable()
+        assert self.dynamic_contols_page.is_input_field_enabeled() is True
+        assert self.dynamic_contols_page.is_btn_displayed(2) is True
+        assert self.dynamic_contols_page.get_btn_text(2) != "Disable"
+        assert self.dynamic_contols_page.get_btn_text(2) == "Enable"
+        
+
+
+
 
 
 
