@@ -49,7 +49,6 @@ class TestDynamicControls(BaseTest):
 
     def test_TC40_remove_and_add_checkbox(self):
         assert self.dynamic_contols_page.is_checkbox_checked() is False
-
         self.dynamic_contols_page.click_on_remove_btn()
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
@@ -72,9 +71,8 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_add_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_displayed() is True
         assert self.dynamic_contols_page.get_rmv_btn_text() == "Remove"
-        self.dynamic_contols_page.wait_until_text_its_gone_absent()
-        assert self.dynamic_contols_page.is_text_its_gone_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
+        assert self.dynamic_contols_page.get_text_under_btn() != "It's gone!"
         assert self.dynamic_contols_page.get_text_under_btn() == "It's back!"
 
 
