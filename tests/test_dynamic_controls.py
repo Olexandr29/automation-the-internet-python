@@ -253,9 +253,48 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_checkbox_checked() is False
         assert self.dynamic_contols_page.is_btn_displayed(1) is True
         assert self.dynamic_contols_page.get_btn_text(1) == "Remove"
-        
 
 
+    def test_TC44_verify_Iput_field_section_state_after_refresh(self):
+        self.dynamic_contols_page.click_on_enable_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_input_is_clickable()
+        assert self.dynamic_contols_page.is_input_field_enabeled() is True
+        assert self.dynamic_contols_page.is_btn_displayed(2) is True
+        assert self.dynamic_contols_page.get_btn_text(2) != "Enable"
+        assert self.dynamic_contols_page.get_btn_text(2) == "Disable"
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's enabled!"
+
+        self.driver.refresh()
+        assert self.dynamic_contols_page.is_input_field_enabeled() is False
+        assert self.dynamic_contols_page.is_btn_displayed(2) is True
+        assert self.dynamic_contols_page.get_btn_text(2) == "Enable"
+
+        self.dynamic_contols_page.click_on_enable_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_input_is_clickable()
+        assert self.dynamic_contols_page.is_input_field_enabeled() is True
+        self.dynamic_contols_page.enter_to_input_field("Input123$")
+        assert self.dynamic_contols_page.get_inputed_text() == "Input123$"
+
+        self.dynamic_contols_page.click_on_btn(2)
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_input_is_disabled()
+        assert self.dynamic_contols_page.get_inputed_text() == "Input123$"
+        assert self.dynamic_contols_page.get_btn_text(2) != "Disable"
+        assert self.dynamic_contols_page.get_btn_text(2) == "Enable"
+        assert self.dynamic_contols_page.get_text_under_btn() != "It's enabled!"
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's disabled!"    
+
+        self.driver.refresh()
+        assert self.dynamic_contols_page.is_input_field_enabeled() is False
+        assert self.dynamic_contols_page.get_btn_text(2) == "Enable"
 
 
 
