@@ -204,7 +204,57 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.get_text_under_btn() != "It's enabled!"
         assert self.dynamic_contols_page.get_text_under_btn() == "It's disabled!"
 
+    def test_TC43_verify_checkbox_section_state_after_refresh(self):
+        self.dynamic_contols_page.click_on_remove_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_checkbox_absent()
+        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.get_btn_text(1) != "Remove"
+        assert self.dynamic_contols_page.get_btn_text(1) == "Add"
+        assert self.dynamic_contols_page.is_text_displayed_under_button() is True
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's gone!"
+
+        self.driver.refresh()
+        assert self.dynamic_contols_page.is_checkbox_displayed() is True
+        assert self.dynamic_contols_page.is_checkbox_checked() is False
+        assert self.dynamic_contols_page.is_btn_displayed(1) is True
+        assert self.dynamic_contols_page.get_btn_text(1) == "Remove"
+
+        self.dynamic_contols_page.click_on_checkbox()
+        assert self.dynamic_contols_page.is_checkbox_checked() is True
+
+        self.dynamic_contols_page.click_on_remove_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_checkbox_absent()
+        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.get_btn_text(1) != "Remove"
+        assert self.dynamic_contols_page.get_btn_text(1) == "Add"
+        assert self.dynamic_contols_page.is_text_displayed_under_button() is True
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's gone!"
         
+        self.dynamic_contols_page.click_on_add_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        assert self.dynamic_contols_page.is_checkbox_displayed() is True
+        assert self.dynamic_contols_page.is_checkbox_checked() is False
+        assert self.dynamic_contols_page.is_btn_displayed(1) is True
+        assert self.dynamic_contols_page.get_btn_text(1) != "Add"
+        assert self.dynamic_contols_page.get_btn_text(1) == "Remove"
+        assert self.dynamic_contols_page.is_text_displayed_under_button() is True
+        assert self.dynamic_contols_page.get_text_under_btn() != "It's gone!"
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's back!"
+
+        self.driver.refresh()
+        assert self.dynamic_contols_page.is_checkbox_checked() is False
+        assert self.dynamic_contols_page.is_btn_displayed(1) is True
+        assert self.dynamic_contols_page.get_btn_text(1) == "Remove"
+        
+
 
 
 
