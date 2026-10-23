@@ -197,7 +197,7 @@ class DynamicControlsPage(BasePage):
                 )
 
     def is_btn_displayed(self, button_number):
-        return self.find_element_by_number(self.locators["btn"], button_number)
+        return self.find_element_by_number(self.locators["btn"], button_number).is_displayed()
 
     def get_btn_text(self, button_number):
         target_btn = self.find_element_by_number(self.locators["btn"], button_number)
@@ -207,4 +207,21 @@ class DynamicControlsPage(BasePage):
         return WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(self.locators["input"]))
 
+    def enter_to_input_field(self, text):
+        return self.type(self.locators["input"], text)
+
+    def get_inputed_text(self):
+        input_webelement = self.find(self.locators["input"])
+        attribute_txt = input_webelement.get_attribute("value")
+        print("attribute_txt =", attribute_txt)
+        return attribute_txt
+
+    def click_on_btn(self, button_number):
+        btn_webelement = self.find_element_by_number(self.locators["btn"], button_number)
+        return btn_webelement.click()
+    
+    def wait_until_input_is_disabled(self):
+        return WebDriverWait(self.driver, 10).until(
+                    EC.all_of(EC.element_attribute_to_include(self.locators["input"], 'disabled')
+                    ))
     
