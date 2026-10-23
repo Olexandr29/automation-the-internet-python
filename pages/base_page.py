@@ -34,14 +34,13 @@ class BasePage:
     
     def get_text(self, locator):
         element = self.find(locator)
-        return element.text
-    
-    def is_visible(self, locator):
-        try:
-            return self.find(locator).is_displayed()
-        except:
-            return False
+        txt = element.text
+        print("txt =", txt)
+        return txt
 
+    def is_visible(self, locator):
+        return self.find(locator).is_displayed()
+       
     def get_key_name(self, key):
         for name, value in vars(Keys).items():
             if value == key:

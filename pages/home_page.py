@@ -10,7 +10,8 @@ class HomePage(BasePage):
             "login_link" : (By.LINK_TEXT, "Form Authentication"),
             "dropdown_link" : (By.LINK_TEXT, "Dropdown"),
             "checkbox_link" : (By.LINK_TEXT, "Checkboxes"),
-            "brocken_images_link" : (By.LINK_TEXT, "Broken Images")
+            "brocken_images_link" : (By.LINK_TEXT, "Broken Images"),
+            "dynamic_controls_link" : (By.LINK_TEXT, "Dynamic Controls")
         }
         
     def open_login_page(self):
@@ -35,3 +36,9 @@ class HomePage(BasePage):
         from pages.broken_images_page import BrokenImagesPage
         self.click(self.locators["brocken_images_link"])
         return BrokenImagesPage(self.driver)
+
+    def open_dynamic_controls_page(self):
+        from pages.dynamic_controls_page import DynamicControlsPage
+        self.click(self.locators["dynamic_controls_link"])
+        return DynamicControlsPage(self.driver)
+    
