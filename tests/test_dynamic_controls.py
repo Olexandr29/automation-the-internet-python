@@ -296,8 +296,120 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_input_field_enabeled() is False
         assert self.dynamic_contols_page.get_btn_text(2) == "Enable"
 
+    def test_TC45_navigate_select_and_change_checkbox_section_state_using_keyboard(self):
+# step 1
+        self.dynamic_contols_page.focus_checkbox()
+        assert self.dynamic_contols_page.is_checkbox_focused() is True
+# step 2        
+        self.dynamic_contols_page.press_space()
+        assert self.dynamic_contols_page.is_checkbox_checked() is True
+# step 3
+        self.dynamic_contols_page.focus_remove_btn()
+        assert self.dynamic_contols_page.is_remove_btn_focused() is True
+# step 4
+        self.dynamic_contols_page.press_enter()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_checkbox_absent()
+        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.get_btn_text(1) != "Remove"
+        assert self.dynamic_contols_page.get_btn_text(1) == "Add"
+        assert self.dynamic_contols_page.is_text_displayed_under_button() is True
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's gone!"
+# step 5
+        self.dynamic_contols_page.focus_add_btn()
+        assert self.dynamic_contols_page.is_add_btn_focused() is True
+# step 6
+        self.dynamic_contols_page.press_enter_on_add_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        assert self.dynamic_contols_page.is_checkbox_displayed() is True
+        assert self.dynamic_contols_page.is_checkbox_checked() is False
+        self.dynamic_contols_page.wait_until_add_btn_absent()
+        assert self.dynamic_contols_page.is_add_btn_absent_or_hidden() is True
+        assert self.dynamic_contols_page.is_remove_btn_displayed() is True
+        assert self.dynamic_contols_page.get_rmv_btn_text() == "Remove"
+        assert self.dynamic_contols_page.is_text_displayed_under_button() is True
+        assert self.dynamic_contols_page.get_text_under_btn() != "It's gone!"
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's back!"
+# step 7
+        self.dynamic_contols_page.focus_checkbox()
+        assert self.dynamic_contols_page.is_checkbox_focused() is True
+        self.dynamic_contols_page.press_space()
+        assert self.dynamic_contols_page.is_checkbox_checked() is True
+# step 8
+        self.dynamic_contols_page.focus_remove_btn()
+        assert self.dynamic_contols_page.is_remove_btn_focused() is True
 
+        self.dynamic_contols_page.press_enter()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_checkbox_absent()
+        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.get_btn_text(1) != "Remove"
+        assert self.dynamic_contols_page.get_btn_text(1) == "Add"
+        assert self.dynamic_contols_page.is_text_displayed_under_button() is True
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's gone!"
+# step 9
+        self.dynamic_contols_page.focus_add_btn()
+        assert self.dynamic_contols_page.is_add_btn_focused() is True
 
+        self.dynamic_contols_page.press_enter_on_add_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        assert self.dynamic_contols_page.is_checkbox_displayed() is True
+        assert self.dynamic_contols_page.is_checkbox_checked() is False
 
+        assert self.dynamic_contols_page.is_text_from_checkbox_displayed() is True
+        assert self.dynamic_contols_page.get_text_from_place_where_was_checkbox() == "A checkbox"
+        assert self.dynamic_contols_page.get_amount_of_text_without_checkboxes() == 2   
+
+        self.dynamic_contols_page.wait_until_add_btn_absent()
+        assert self.dynamic_contols_page.is_add_btn_absent_or_hidden() is True
+        assert self.dynamic_contols_page.is_remove_btn_displayed() is True
+        assert self.dynamic_contols_page.get_rmv_btn_text() == "Remove"
+        assert self.dynamic_contols_page.is_text_displayed_under_button() is True
+        assert self.dynamic_contols_page.get_text_under_btn() != "It's gone!"
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's back!"
+
+    def test_TC46_navigate_select_and_change_input_field_section_state_using_keyboard(self):
+# step 1
+        self.dynamic_contols_page.focus_enale_btn()
+        assert self.dynamic_contols_page.is_enable_btn_focused() is True
+# step 2
+        self.dynamic_contols_page.press_enter_on_enable_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_input_is_clickable()
+        assert self.dynamic_contols_page.is_input_field_enabeled() is True
+        assert self.dynamic_contols_page.is_btn_displayed(2) is True
+        assert self.dynamic_contols_page.get_btn_text(2) != "Enable"
+        assert self.dynamic_contols_page.get_btn_text(2) == "Disable"
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's enabled!"
+# step 3
+        self.dynamic_contols_page.focus_input_field()
+        assert self.dynamic_contols_page.is_input_filed_focused()
+# step 4
+        self.dynamic_contols_page.enter_to_input_field("$And40")
+        assert self.dynamic_contols_page.get_inputed_text() == "$And40"
+# step 5
+        self.dynamic_contols_page.focus_disable_btn()
+        assert self.dynamic_contols_page.is_disable_btn_focused() is True
+# step 6
+        self.dynamic_contols_page.press_enter_on_disable_btn()
+        assert self.dynamic_contols_page.is_wait_text_displayed() is True
+        assert self.dynamic_contols_page.get_wait_text() == "Wait for it..."
+        assert self.dynamic_contols_page.is_progress_bar_displayed() is True
+        self.dynamic_contols_page.wait_until_input_is_disabled()
+        assert self.dynamic_contols_page.get_inputed_text() == "$And40"
+        assert self.dynamic_contols_page.get_btn_text(2) != "Disable"
+        assert self.dynamic_contols_page.get_btn_text(2) == "Enable"
+        assert self.dynamic_contols_page.get_text_under_btn() != "It's enabled!"
+        assert self.dynamic_contols_page.get_text_under_btn() == "It's disabled!"
 
 

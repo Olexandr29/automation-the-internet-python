@@ -2,6 +2,7 @@ from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 
 class DynamicControlsPage(BasePage):
     def __init__(self, driver, timeout=10):
@@ -224,4 +225,75 @@ class DynamicControlsPage(BasePage):
         return WebDriverWait(self.driver, 10).until(
                     EC.all_of(EC.element_attribute_to_include(self.locators["input"], 'disabled')
                     ))
+
+    def focus_checkbox(self):
+        target_webelement = self.find(self.locators["check_box"])
+        return self.focus_element(target_webelement)
+
+    def is_checkbox_focused(self):
+        target_webelement = self.find(self.locators["check_box"])
+        return self.is_element_focused(target_webelement)
+
+    def press_space(self):
+        webelement = self.find(self.locators["check_box"])
+        return self.press_key_on_element(webelement, Keys.SPACE)
+
+    def focus_remove_btn(self):
+        target_webelement = self.find(self.locators["remove_btn"])
+        return self.focus_element(target_webelement)
+
+    def is_remove_btn_focused(self):
+        target_webelement = self.find(self.locators["remove_btn"])
+        return self.is_element_focused(target_webelement)
+
+    def press_enter(self):
+        target_webelement = self.find(self.locators["remove_btn"])
+        return self.press_key_on_element(target_webelement, Keys.ENTER)
+
+    def focus_add_btn(self):
+        target_webelement = self.find(self.locators["add_btn"])
+        return self.focus_element(target_webelement)
+    
+    def is_add_btn_focused(self):
+        target_webelement = self.find(self.locators["add_btn"])
+        return self.is_element_focused(target_webelement)
+    
+    def press_enter_on_add_btn(self):
+        target_webelement = self.find(self.locators["add_btn"])
+        return self.press_key_on_element(target_webelement, Keys.ENTER)
+
+    def focus_enale_btn(self):
+        target_webelement = self.find(self.locators["enable_btn"])
+        return self.focus_element(target_webelement)
+        
+    def is_enable_btn_focused(self):
+        target_webelement = self.find(self.locators["enable_btn"])
+        return self.is_element_focused(target_webelement)
+        
+    def press_enter_on_enable_btn(self):
+        target_webelement = self.find(self.locators["enable_btn"])
+        return self.press_key_on_element(target_webelement, Keys.ENTER)
+
+    def focus_input_field(self):
+        target_webelement = self.find(self.locators["input"])
+        return self.focus_element(target_webelement)
+            
+    def is_input_filed_focused(self):
+        target_webelement = self.find(self.locators["input"])
+        return self.is_element_focused(target_webelement)
+
+    def focus_disable_btn(self):
+        target_webelement = self.find(self.locators["disable_btn"])
+        return self.focus_element(target_webelement)
+            
+    def is_disable_btn_focused(self):
+        target_webelement = self.find(self.locators["disable_btn"])
+        return self.is_element_focused(target_webelement)
+            
+    def press_enter_on_disable_btn(self):
+        target_webelement = self.find(self.locators["disable_btn"])
+        return self.press_key_on_element(target_webelement, Keys.ENTER)
+    
+
+
     
