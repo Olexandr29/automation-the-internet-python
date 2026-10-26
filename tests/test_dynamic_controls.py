@@ -1,12 +1,14 @@
 from tests.base_test import BaseTest, pytest
 from pages.dynamic_controls_page import DynamicControlsPage
 
+@pytest.mark.regression
 class TestDynamicControls(BaseTest):
 
     @pytest.fixture(autouse=True)
     def setup_dynamic_controls(self, setup_test):
         self.dynamic_contols_page = self.home_page.open_dynamic_controls_page()
 
+    @pytest.mark.smoke
     def test_TC38_verify_page_content(self):
         assert self.driver.current_url == "https://the-internet.herokuapp.com/dynamic_controls"
         assert self.dynamic_contols_page.get_document_ready_state() == "complete"
@@ -40,6 +42,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_elemental_selenium_link_displayed() is True
         assert self.dynamic_contols_page.is_sauce_labs_link_displayed() is True
 
+    @pytest.mark.smoke
     def test_TC39_verify_checkbox_initial_state_and_changes(self):
         assert self.dynamic_contols_page.is_checkbox_checked() is False
         self.dynamic_contols_page.click_on_checkbox()
@@ -75,6 +78,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.get_text_under_btn() != "It's gone!"
         assert self.dynamic_contols_page.get_text_under_btn() == "It's back!"
 
+    @pytest.mark.smoke
     def test_TC41_remove_and_add_checked_checkbox(self):
         assert self.dynamic_contols_page.is_checkbox_checked() is False
         
@@ -174,6 +178,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.get_text_under_btn() == "It's back!"
 
 
+    @pytest.mark.smoke
     def test_TC42_enable_and_disable_the_Input_field(self):
         assert self.dynamic_contols_page.is_input_field_enabeled() is False
         
