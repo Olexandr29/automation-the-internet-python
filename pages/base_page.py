@@ -59,11 +59,12 @@ class BasePage:
                 element.send_keys(specific_key)        
 
     def focus_element(self, element):
-        actions = ActionChains(self.driver)   
-        for _ in range(10):
-            active_element = self.driver.switch_to.active_element
-            if active_element == element:
-                    return 
+        with Reporter.step('Focus webelement'):
+            actions = ActionChains(self.driver)   
+            for _ in range(10):
+                active_element = self.driver.switch_to.active_element
+                if active_element == element:
+                        return 
             
             actions.send_keys(Keys.TAB).perform()  
 

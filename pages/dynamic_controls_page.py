@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
+from utils.reporter import Reporter
 
 class DynamicControlsPage(BasePage):
     def __init__(self, driver, timeout=10):
@@ -35,22 +36,25 @@ class DynamicControlsPage(BasePage):
         return ready_state
 
     def is_header_displayed(self):
-        header_element = self.driver.find_element(*self.locators["header"])
-        return header_element.is_displayed()
+        with Reporter.step("Observe the Header visibillity"):
+            header_element = self.driver.find_element(*self.locators["header"])
+            return header_element.is_displayed()
 
     def get_header_text(self):
         return self.get_text(self.locators["header"])
 
     def is_paragraph_displayed(self):
-        paragraph_element = self.driver.find_element(*self.locators["paragraph"])
-        return paragraph_element.is_displayed()
+        with Reporter.step("Observe the page description visibillity"):
+            paragraph_element = self.driver.find_element(*self.locators["paragraph"])
+            return paragraph_element.is_displayed()
 
     def get_paragraph_text(self):
         return self.get_text(self.locators["paragraph"])
 
     def is_subheader_remove_add_displayed(self):
-        subheader_el = self.driver.find_element(*self.locators["remove_add_subheader"])
-        return subheader_el.is_displayed()
+        with Reporter.step("Observe the Checkbox section visibillity"):
+            subheader_el = self.driver.find_element(*self.locators["remove_add_subheader"])
+            return subheader_el.is_displayed()
 
     def get_subheader_remove_add_text(self):
         return self.get_text(self.locators["remove_add_subheader"])
@@ -75,8 +79,9 @@ class DynamicControlsPage(BasePage):
         return self.get_text(self.locators["remove_btn"])
 
     def is_subheader_enabel_disable_displayed(self):
-        subheader_el = self.driver.find_element(*self.locators["enabel_disable_subheader"])
-        return subheader_el.is_displayed()
+        with Reporter.step("Observe the Input section visibillity"):
+            subheader_el = self.driver.find_element(*self.locators["enabel_disable_subheader"])
+            return subheader_el.is_displayed()
     
     def get_subheader_enabel_disable_text(self):
         return self.get_text(self.locators["enabel_disable_subheader"])
@@ -91,7 +96,8 @@ class DynamicControlsPage(BasePage):
         return self.get_text(self.locators["enable_btn"])
     
     def is_footer_displayed(self):
-        return self.is_visible(self.locators["footer"])
+        with Reporter.step("Observe the Footer visibillity"):
+            return self.is_visible(self.locators["footer"])
 
     def get_footer_text(self):
         return self.get_text(self.locators["footer"])
@@ -107,10 +113,12 @@ class DynamicControlsPage(BasePage):
         return checkbox_el.is_selected()
 
     def click_on_checkbox(self):
-        return self.click(self.locators["check_box"])
+        with Reporter.step("Click on the Checkbox"):
+            return self.click(self.locators["check_box"])
 
     def click_on_remove_btn(self):
-        return self.click(self.locators["remove_btn"])
+        with Reporter.step("Click on the Remove button"):
+            return self.click(self.locators["remove_btn"])
 
     def is_wait_text_displayed(self):
         return self.is_visible(self.locators["loading"])
@@ -153,7 +161,8 @@ class DynamicControlsPage(BasePage):
         return self.get_text(self.locators["text_under_btn"])
 
     def click_on_add_btn(self):
-        return self.click(self.locators["add_btn"])
+        with Reporter.step("Click on the Add button"):
+            return self.click(self.locators["add_btn"])
 
     def wait_until_add_btn_absent(self):
         return WebDriverWait(self.driver, 10).until(
@@ -190,7 +199,8 @@ class DynamicControlsPage(BasePage):
         return self.find(self.locators["input"]).is_enabled()
 
     def click_on_enable_btn(self):
-        return self.click(self.locators["enable_btn"])
+        with Reporter.step("Click on the Enable button"):
+            return self.click(self.locators["enable_btn"])
 
     def wait_until_enable_btn_absent(self):
             return WebDriverWait(self.driver, 10).until(
@@ -209,7 +219,8 @@ class DynamicControlsPage(BasePage):
             EC.element_to_be_clickable(self.locators["input"]))
 
     def enter_to_input_field(self, text):
-        return self.type(self.locators["input"], text)
+        with Reporter.step("Enter text into the Input field"):
+            return self.type(self.locators["input"], text)
 
     def get_inputed_text(self):
         input_webelement = self.find(self.locators["input"])
@@ -218,8 +229,9 @@ class DynamicControlsPage(BasePage):
         return attribute_txt
 
     def click_on_btn(self, button_number):
-        btn_webelement = self.find_element_by_number(self.locators["btn"], button_number)
-        return btn_webelement.click()
+        with Reporter.step("Click on the button"):
+            btn_webelement = self.find_element_by_number(self.locators["btn"], button_number)
+            return btn_webelement.click()
     
     def wait_until_input_is_disabled(self):
         return WebDriverWait(self.driver, 10).until(
