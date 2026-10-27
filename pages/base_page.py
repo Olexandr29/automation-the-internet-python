@@ -22,6 +22,10 @@ class BasePage:
         elements = self.find_elements(locator)
         return elements[number - 1]
 
+    def get_amount_of_elements(self, locator):
+        array = self.find_elements(locator)
+        return len(array)
+
     def click(self, locator):
         element = self.find(locator)
         element.click()
@@ -31,15 +35,17 @@ class BasePage:
         element = self.find(locator)
         element.clear()
         element.send_keys(text)
+
+    def is_visible(self, locator):
+            return self.find(locator).is_displayed()
     
     def get_text(self, locator):
         element = self.find(locator)
-        txt = element.text
-        print("txt =", txt)
-        return txt
+        return element.text
 
-    def is_visible(self, locator):
-        return self.find(locator).is_displayed()
+    def get_attributte_value(self, locator):
+            webelement = self.find(locator)
+            return webelement.get_attribute("value")
        
     def get_key_name(self, key):
         for name, value in vars(Keys).items():
@@ -69,4 +75,12 @@ class BasePage:
             actions.send_keys(Keys.TAB).perform()  
 
     def is_element_focused(self, element):
-        return self.driver.switch_to.active_element == element      
+        return self.driver.switch_to.active_element == element   
+
+    def wait_until_element_absent(self, locator):
+            return WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located(locator))
+
+    def is_element_absent_or_hidden(self, locator):
+            elements = self.find_elements(locator)
+            return len(elements) == 0 or not elements[0].is_displayed()
+    

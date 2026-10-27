@@ -37,33 +37,27 @@ class DynamicControlsPage(BasePage):
 
     def is_header_displayed(self):
         with Reporter.step("Observe the Header visibillity"):
-            header_element = self.driver.find_element(*self.locators["header"])
-            return header_element.is_displayed()
+            return self.is_visible(self.locators["header"])
 
     def get_header_text(self):
         return self.get_text(self.locators["header"])
 
     def is_paragraph_displayed(self):
         with Reporter.step("Observe the page description visibillity"):
-            paragraph_element = self.driver.find_element(*self.locators["paragraph"])
-            return paragraph_element.is_displayed()
+            return self.is_visible(self.locators["paragraph"])
 
     def get_paragraph_text(self):
         return self.get_text(self.locators["paragraph"])
 
     def is_subheader_remove_add_displayed(self):
         with Reporter.step("Observe the Checkbox section visibillity"):
-            subheader_el = self.driver.find_element(*self.locators["remove_add_subheader"])
-            return subheader_el.is_displayed()
+            return self.is_visible(self.locators["remove_add_subheader"])
 
     def get_subheader_remove_add_text(self):
         return self.get_text(self.locators["remove_add_subheader"])
 
     def get_amount_of_checkboxes(self):
-        checkboxes_el = self.driver.find_elements(*self.locators["check_box"])
-        checkbox_length = len(checkboxes_el)
-        print("checkbox_length =", checkbox_length)
-        return checkbox_length
+        return self.get_amount_of_elements(self.locators["check_box"])
     
     def is_checkbox_displayed(self):
         return self.is_visible(self.locators["checkbox"])
@@ -72,16 +66,14 @@ class DynamicControlsPage(BasePage):
         return self.get_text(self.locators["checkbox"])
 
     def is_remove_btn_displayed(self):
-        remove_el = self.driver.find_element(*self.locators["remove_btn"])
-        return remove_el.is_displayed()
+        return self.is_visible(self.locators["remove_btn"])
 
     def get_rmv_btn_text(self):
         return self.get_text(self.locators["remove_btn"])
 
     def is_subheader_enabel_disable_displayed(self):
         with Reporter.step("Observe the Input section visibillity"):
-            subheader_el = self.driver.find_element(*self.locators["enabel_disable_subheader"])
-            return subheader_el.is_displayed()
+            return self.is_visible(self.locators["enabel_disable_subheader"])
     
     def get_subheader_enabel_disable_text(self):
         return self.get_text(self.locators["enabel_disable_subheader"])
@@ -132,24 +124,19 @@ class DynamicControlsPage(BasePage):
             ).is_displayed()
 
     def wait_until_checkbox_absent(self):
-        return WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located(self.locators["check_box"]))
+        return self.wait_until_element_absent(self.locators["check_box"])
 
     def is_checkbox_absent_or_hidden(self):
-        checkbox_elements = self.driver.find_elements(*self.locators["check_box"])
-        return len(checkbox_elements) == 0 or not checkbox_elements[0].is_displayed()
-
+        return self.is_element_absent_or_hidden(self.locators["check_box"])
+    
     def wait_until_remove_btn_absent(self):
-        return WebDriverWait(self.driver, 10).until(
-            EC.invisibility_of_element_located(self.locators["remove_btn"])
-        )
+        return self.wait_until_element_absent(self.locators["remove_btn"])
     
     def is_remove_btn_absent_or_hidden(self):
-        remove_btn_elements = self.driver.find_elements(*self.locators["remove_btn"])
-        return len(remove_btn_elements) == 0 or not remove_btn_elements[0].is_displayed()
+        return self.is_element_absent_or_hidden(self.locators["remove_btn"])
 
     def is_add_btn_displayed(self):
-        add_btn_element = self.driver.find_element(*self.locators["add_btn"])
-        return add_btn_element.is_displayed()
+        return self.is_visible(self.locators["add_btn"])
 
     def get_add_btn_text(self):
         return self.get_text(self.locators["add_btn"])
@@ -165,23 +152,16 @@ class DynamicControlsPage(BasePage):
             return self.click(self.locators["add_btn"])
 
     def wait_until_add_btn_absent(self):
-        return WebDriverWait(self.driver, 10).until(
-            EC.invisibility_of_element_located(self.locators["add_btn"])
-            )
+        return self.wait_until_element_absent(self.locators["add_btn"])
     
     def is_add_btn_absent_or_hidden(self):
-        add_btn_elements = self.driver.find_elements(*self.locators["add_btn"])
-        return len(add_btn_elements) == 0 or not add_btn_elements[0].is_displayed()
-    
+        return self.is_element_absent_or_hidden(self.locators["add_btn"])
     
     def wait_until_text_its_gone_absent(self):
-        return WebDriverWait(self.driver, 10).until(
-        EC.invisibility_of_element_located(self.locators["text_under_btn"])
-                )
+        return self.wait_until_element_absent(self.locators["text_under_btn"])
 
     def is_text_its_gone_absent_or_hidden(self):
-        text_its_gone_elements = self.driver.find_elements(*self.locators["text_under_btn"])
-        return len(text_its_gone_elements) == 0 or not text_its_gone_elements[0].is_displayed()
+        return self.is_element_absent_or_hidden(self.locators["text_under_btn"])
 
     def is_text_from_checkbox_displayed(self):
         return self.is_visible(self.locators["just_txt_of_checkbox"])
@@ -190,10 +170,7 @@ class DynamicControlsPage(BasePage):
         return self.get_text(self.locators["just_txt_of_checkbox"])
 
     def get_amount_of_text_without_checkboxes(self):
-        text_without_checkboxes_el = self.driver.find_elements(*self.locators["just_txt_of_checkbox"])
-        length = len(text_without_checkboxes_el)
-        print("length =", length)
-        return length
+        return self.get_amount_of_elements(self.locators["just_txt_of_checkbox"])
 
     def is_input_field_enabeled(self):
         return self.find(self.locators["input"]).is_enabled()
@@ -203,9 +180,7 @@ class DynamicControlsPage(BasePage):
             return self.click(self.locators["enable_btn"])
 
     def wait_until_enable_btn_absent(self):
-            return WebDriverWait(self.driver, 10).until(
-                EC.invisibility_of_element_located(self.locators["enable_btn"])
-                )
+        return self.wait_until_element_absent(self.locators["enable_btn"])
 
     def is_btn_displayed(self, button_number):
         return self.find_element_by_number(self.locators["btn"], button_number).is_displayed()
@@ -215,18 +190,15 @@ class DynamicControlsPage(BasePage):
         return target_btn.text
     
     def wait_until_input_is_clickable(self):
-        return WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.locators["input"]))
+        return self.wait_until_element_absent(self.locators["input"])
 
     def enter_to_input_field(self, text):
         with Reporter.step("Enter text into the Input field"):
             return self.type(self.locators["input"], text)
 
     def get_inputed_text(self):
-        input_webelement = self.find(self.locators["input"])
-        attribute_txt = input_webelement.get_attribute("value")
-        print("attribute_txt =", attribute_txt)
-        return attribute_txt
+        return self.get_attributte_value(self.locators["input"])
+
 
     def click_on_btn(self, button_number):
         with Reporter.step("Click on the button"):
