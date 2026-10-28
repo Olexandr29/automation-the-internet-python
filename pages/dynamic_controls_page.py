@@ -127,10 +127,8 @@ class DynamicControlsPage(BasePage):
         self.wait_until_element_absent(self.locators["check_box"])
         return self.is_element_absent_or_hidden(self.locators["check_box"])
     
-    def wait_until_remove_btn_absent(self):
-        return self.wait_until_element_absent(self.locators["remove_btn"])
-    
-    def is_remove_btn_absent_or_hidden(self):
+    def wait_until_remove_btn_absent_or_hidden(self):
+        self.wait_until_element_absent(self.locators["remove_btn"])
         return self.is_element_absent_or_hidden(self.locators["remove_btn"])
 
     def is_add_btn_displayed(self):
@@ -153,10 +151,8 @@ class DynamicControlsPage(BasePage):
         self.wait_until_element_absent(self.locators["add_btn"])
         return self.is_element_absent_or_hidden(self.locators["add_btn"])
     
-    def wait_until_text_its_gone_absent(self):
-        return self.wait_until_element_absent(self.locators["text_under_btn"])
-
-    def is_text_its_gone_absent_or_hidden(self):
+    def wait_until_text_its_gone_absent_or_hidden(self):
+        self.wait_until_element_absent(self.locators["text_under_btn"])
         return self.is_element_absent_or_hidden(self.locators["text_under_btn"])
 
     def is_text_from_checkbox_displayed(self):
