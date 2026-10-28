@@ -65,9 +65,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_checkbox_absent()
-
-        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_checkbox_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_add_btn_displayed() is True
         assert self.dynamic_contols_page.get_add_btn_text() == DynamicControlsData.ADD_BUTTON_TITLE
@@ -100,8 +98,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_checkbox_absent()
-        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_checkbox_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_add_btn_displayed() is True
         assert self.dynamic_contols_page.get_add_btn_text() == DynamicControlsData.ADD_BUTTON_TITLE
@@ -128,8 +125,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_checkbox_absent()
-        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_checkbox_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_text_from_checkbox_displayed() is True
         assert self.dynamic_contols_page.get_text_from_place_where_was_checkbox() == DynamicControlsData.TEXT_FROM_PLACE_WHERE_WAS_CHECKBOX
         assert self.dynamic_contols_page.is_remove_btn_absent_or_hidden() is True
@@ -160,8 +156,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_checkbox_absent()
-        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_checkbox_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_text_from_checkbox_displayed() is True
         assert self.dynamic_contols_page.get_text_from_place_where_was_checkbox() == DynamicControlsData.TEXT_FROM_PLACE_WHERE_WAS_CHECKBOX
         assert self.dynamic_contols_page.get_amount_of_text_without_checkboxes() == 2
@@ -224,8 +219,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_checkbox_absent()
-        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_checkbox_absent_or_hidden() is True
         assert self.dynamic_contols_page.get_btn_text(1) != DynamicControlsData.REMOVE_BUTTON_TITLE
         assert self.dynamic_contols_page.get_btn_text(1) == DynamicControlsData.ADD_BUTTON_TITLE
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
@@ -245,8 +239,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_checkbox_absent()
-        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_checkbox_absent_or_hidden() is True
         assert self.dynamic_contols_page.get_btn_text(1) != DynamicControlsData.REMOVE_BUTTON_TITLE
         assert self.dynamic_contols_page.get_btn_text(1) == DynamicControlsData.ADD_BUTTON_TITLE 
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
@@ -328,8 +321,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_checkbox_absent()
-        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_checkbox_absent_or_hidden() is True
         assert self.dynamic_contols_page.get_btn_text(1) != DynamicControlsData.REMOVE_BUTTON_TITLE 
         assert self.dynamic_contols_page.get_btn_text(1) == DynamicControlsData.ADD_BUTTON_TITLE        
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
@@ -364,8 +356,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_checkbox_absent()
-        assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_checkbox_absent_or_hidden() is True
         assert self.dynamic_contols_page.get_btn_text(1) != DynamicControlsData.REMOVE_BUTTON_TITLE         
         assert self.dynamic_contols_page.get_btn_text(1) == "Add"
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True

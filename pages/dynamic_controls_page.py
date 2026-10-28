@@ -123,10 +123,8 @@ class DynamicControlsPage(BasePage):
             EC.visibility_of_element_located(self.locators["progress_bar"])
             ).is_displayed()
 
-    def wait_until_checkbox_absent(self):
-        return self.wait_until_element_absent(self.locators["check_box"])
-
-    def is_checkbox_absent_or_hidden(self):
+    def wait_until_checkbox_absent_or_hidden(self):
+        self.wait_until_element_absent(self.locators["check_box"])
         return self.is_element_absent_or_hidden(self.locators["check_box"])
     
     def wait_until_remove_btn_absent(self):
