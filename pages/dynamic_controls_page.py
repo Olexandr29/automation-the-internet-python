@@ -190,7 +190,7 @@ class DynamicControlsPage(BasePage):
         return target_btn.text
     
     def wait_until_input_is_clickable(self):
-        return self.wait_until_element_absent(self.locators["input"])
+        return self.wait_until_element_is_clickable(self.locators["input"])
 
     def enter_to_input_field(self, text):
         with Reporter.step("Enter text into the Input field"):

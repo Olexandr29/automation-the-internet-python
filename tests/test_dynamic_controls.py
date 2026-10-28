@@ -66,6 +66,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
         self.dynamic_contols_page.wait_until_checkbox_absent()
+
         assert self.dynamic_contols_page.is_checkbox_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_add_btn_displayed() is True

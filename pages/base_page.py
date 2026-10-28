@@ -72,15 +72,19 @@ class BasePage:
                 if active_element == element:
                         return 
             
-            actions.send_keys(Keys.TAB).perform()  
+                actions.send_keys(Keys.TAB).perform()  
 
     def is_element_focused(self, element):
         return self.driver.switch_to.active_element == element   
 
+    def wait_until_element_is_clickable(self, locator):
+         return self.wait.until(EC.element_to_be_clickable(locator))
+    
     def wait_until_element_absent(self, locator):
             return WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located(locator))
 
     def is_element_absent_or_hidden(self, locator):
-            elements = self.find_elements(locator)
+            elements = self.driver.find_elements(*locator)
             return len(elements) == 0 or not elements[0].is_displayed()
+
     
