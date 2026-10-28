@@ -149,10 +149,8 @@ class DynamicControlsPage(BasePage):
         with Reporter.step("Click on the Add button"):
             return self.click(self.locators["add_btn"])
 
-    def wait_until_add_btn_absent(self):
-        return self.wait_until_element_absent(self.locators["add_btn"])
-    
-    def is_add_btn_absent_or_hidden(self):
+    def wait_until_add_btn_absent_or_hidden(self):
+        self.wait_until_element_absent(self.locators["add_btn"])
         return self.is_element_absent_or_hidden(self.locators["add_btn"])
     
     def wait_until_text_its_gone_absent(self):

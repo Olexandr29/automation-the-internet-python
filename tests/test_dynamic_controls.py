@@ -78,8 +78,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
         assert self.dynamic_contols_page.is_checkbox_displayed() is True
         assert self.dynamic_contols_page.is_checkbox_checked() is DynamicControlsData.INITIAL_CHECKBOX_STATE
-        self.dynamic_contols_page.wait_until_add_btn_absent()
-        assert self.dynamic_contols_page.is_add_btn_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_add_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_displayed() is True
         assert self.dynamic_contols_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
@@ -111,8 +110,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
         assert self.dynamic_contols_page.is_checkbox_displayed() is True
         assert self.dynamic_contols_page.is_checkbox_checked() is DynamicControlsData.INITIAL_CHECKBOX_STATE
-        self.dynamic_contols_page.wait_until_add_btn_absent()
-        assert self.dynamic_contols_page.is_add_btn_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_add_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_displayed() is True
         assert self.dynamic_contols_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
@@ -142,8 +140,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_checkbox_checked() is DynamicControlsData.INITIAL_CHECKBOX_STATE
         assert self.dynamic_contols_page.is_text_from_checkbox_displayed() is True
         assert self.dynamic_contols_page.get_text_from_place_where_was_checkbox() == DynamicControlsData.TEXT_FROM_PLACE_WHERE_WAS_CHECKBOX      
-        self.dynamic_contols_page.wait_until_add_btn_absent()
-        assert self.dynamic_contols_page.is_add_btn_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_add_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_displayed() is True
         assert self.dynamic_contols_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
@@ -175,8 +172,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_text_from_checkbox_displayed() is True
         assert self.dynamic_contols_page.get_text_from_place_where_was_checkbox() == DynamicControlsData.TEXT_FROM_PLACE_WHERE_WAS_CHECKBOX  
         assert self.dynamic_contols_page.get_amount_of_text_without_checkboxes() == 3    
-        self.dynamic_contols_page.wait_until_add_btn_absent()
-        assert self.dynamic_contols_page.is_add_btn_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_add_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_displayed() is True
         assert self.dynamic_contols_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE        
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
@@ -336,8 +332,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
         assert self.dynamic_contols_page.is_checkbox_displayed() is True
         assert self.dynamic_contols_page.is_checkbox_checked() is DynamicControlsData.INITIAL_CHECKBOX_STATE
-        self.dynamic_contols_page.wait_until_add_btn_absent()
-        assert self.dynamic_contols_page.is_add_btn_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_add_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_displayed() is True
         assert self.dynamic_contols_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE 
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
@@ -376,8 +371,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.get_text_from_place_where_was_checkbox() == DynamicControlsData.TEXT_FROM_PLACE_WHERE_WAS_CHECKBOX 
         assert self.dynamic_contols_page.get_amount_of_text_without_checkboxes() == 2   
 
-        self.dynamic_contols_page.wait_until_add_btn_absent()
-        assert self.dynamic_contols_page.is_add_btn_absent_or_hidden() is True
+        assert self.dynamic_contols_page.wait_until_add_btn_absent_or_hidden() is True
         assert self.dynamic_contols_page.is_remove_btn_displayed() is True
         assert self.dynamic_contols_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE 
         assert self.dynamic_contols_page.is_text_displayed_under_button() is True
