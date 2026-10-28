@@ -193,13 +193,11 @@ class TestDynamicControls(BaseTest):
     def test_TC42_enable_and_disable_the_Input_field(self):
         with Reporter.step("Observe the Input field initial state"):
                 assert self.dynamic_contols_page.is_input_field_enabeled() is DynamicControlsData.INITIAL_INPUT_STATE
-        
         self.dynamic_contols_page.click_on_enable_btn()
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT 
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_input_is_clickable()
-        assert self.dynamic_contols_page.is_input_field_enabeled() is True
+        assert self.dynamic_contols_page.wait_until_input_is_enabled() is True
         assert self.dynamic_contols_page.is_btn_displayed(2) is True
         assert self.dynamic_contols_page.get_btn_text(2) != DynamicControlsData.ENABLE_BUTTON_TITLE
         assert self.dynamic_contols_page.get_btn_text(2) == DynamicControlsData.DISABLE_BUTTON_TITLE
@@ -279,8 +277,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_input_is_clickable()
-        assert self.dynamic_contols_page.is_input_field_enabeled() is True
+        assert self.dynamic_contols_page.wait_until_input_is_enabled() is True
         assert self.dynamic_contols_page.is_btn_displayed(2) is True
         assert self.dynamic_contols_page.get_btn_text(2) != DynamicControlsData.ENABLE_BUTTON_TITLE
         assert self.dynamic_contols_page.get_btn_text(2) == DynamicControlsData.DISABLE_BUTTON_TITLE
@@ -296,8 +293,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_input_is_clickable()
-        assert self.dynamic_contols_page.is_input_field_enabeled() is True
+        assert self.dynamic_contols_page.wait_until_input_is_enabled() is True
         self.dynamic_contols_page.enter_to_input_field(DynamicControlsData.INPUT_TEXT_ALPHANUMERIC_SPECIAL_CHARS)
         assert self.dynamic_contols_page.get_inputed_text() == DynamicControlsData.INPUT_TEXT_ALPHANUMERIC_SPECIAL_CHARS
 
@@ -406,8 +402,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_contols_page.is_wait_text_displayed() is True
         assert self.dynamic_contols_page.get_wait_text() == DynamicControlsData.WAIT_TEXT 
         assert self.dynamic_contols_page.is_progress_bar_displayed() is True
-        self.dynamic_contols_page.wait_until_input_is_clickable()
-        assert self.dynamic_contols_page.is_input_field_enabeled() is True
+        assert self.dynamic_contols_page.wait_until_input_is_enabled() is True
         assert self.dynamic_contols_page.is_btn_displayed(2) is True
         assert self.dynamic_contols_page.get_btn_text(2) != DynamicControlsData.ENABLE_BUTTON_TITLE
         assert self.dynamic_contols_page.get_btn_text(2) == DynamicControlsData.DISABLE_BUTTON_TITLE         

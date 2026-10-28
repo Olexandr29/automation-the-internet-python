@@ -77,8 +77,9 @@ class BasePage:
     def is_element_focused(self, element):
         return self.driver.switch_to.active_element == element   
 
-    def wait_until_element_is_clickable(self, locator):
-         return self.wait.until(EC.element_to_be_clickable(locator))
+    def wait_until_element_is_enabled(self, locator):
+         return self.wait.until(
+              lambda driver: driver.find_element(*locator).is_enabled())
     
     def wait_until_element_absent(self, locator):
             return WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located(locator))

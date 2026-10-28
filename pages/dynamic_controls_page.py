@@ -189,8 +189,8 @@ class DynamicControlsPage(BasePage):
         target_btn = self.find_element_by_number(self.locators["btn"], button_number)
         return target_btn.text
     
-    def wait_until_input_is_clickable(self):
-        return self.wait_until_element_is_clickable(self.locators["input"])
+    def wait_until_input_is_enabled(self):
+        return self.wait_until_element_is_enabled(self.locators["input"])
 
     def enter_to_input_field(self, text):
         with Reporter.step("Enter text into the Input field"):
