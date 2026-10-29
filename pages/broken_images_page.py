@@ -10,7 +10,9 @@ class BrokenImagesPage(BasePage):
             "header" : (By.TAG_NAME, "h3"),
             "imgs" : (By.XPATH, "//div[@class='example']//img"),
             "footer" : (By.XPATH, "//div[@style='text-align: center;']"),
-            "footer_link" : (By.LINK_TEXT, "Elemental Selenium")
+            "footer_link_selenium" : (By.LINK_TEXT, "Elemental Selenium"),
+            "footer_link_sauce_labs" : (By.LINK_TEXT, "Sauce Labs")
+
         }
 
     def get_document_ready_state(self):
@@ -35,12 +37,18 @@ class BrokenImagesPage(BasePage):
     def get_footer_text(self):
         return self.get_text(self.locators["footer"])
 
-    def is_footer_link_displayed(self):
-        with Reporter.step("Observe the Footer Link visibillity"):
-            return self.is_visible(self.locators["footer_link"])
+    def is_footer_link_selenium_displayed(self):
+        with Reporter.step("Observe the Footer Links visibillity"):
+            return self.is_visible(self.locators["footer_link_selenium"])
 
-    def get_footer_link_text(self):
-        return self.get_text(self.locators["footer_link"])
+    def get_footer_link_selenium_text(self):
+        return self.get_text(self.locators["footer_link_selenium"])
+
+    def is_footer_link_sauce_labs_displayed(self):
+        return self.is_visible(self.locators["footer_link_sauce_labs"])
+    
+    def get_footer_link_sauce_labs_text(self):
+        return self.get_text(self.locators["footer_link_sauce_labs"])
 
     def is_img_loaded(self, img_number):
         with Reporter.step(f"Observe the image {img_number} is displayed correctly"):
