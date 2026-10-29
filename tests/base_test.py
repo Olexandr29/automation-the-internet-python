@@ -18,6 +18,7 @@ class BaseTest:
             options.add_argument("--disable-dev-shm-usage")
 
         self.driver = webdriver.Chrome(options=options)
+        self.driver.set_window_size(810, 1080)
         self.home_page = HomePage(self.driver)
         self.driver.get(self.home_page.URL)
 
