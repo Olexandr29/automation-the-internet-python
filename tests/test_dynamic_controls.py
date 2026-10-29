@@ -12,6 +12,45 @@ class TestDynamicControls(BaseTest):
     def setup_dynamic_controls(self, setup_test):
         self.dynamic_controls_page = self.home_page.open_dynamic_controls_page()
 
+    def _verify_state_after_click_on_add_btn(self):  
+            assert self.dynamic_controls_page.is_wait_text_displayed() is True
+            assert self.dynamic_controls_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
+            assert self.dynamic_controls_page.is_progress_bar_displayed() is True
+            assert self.dynamic_controls_page.is_checkbox_displayed() is True
+            assert self.dynamic_controls_page.wait_until_add_btn_absent_or_hidden() is True
+            assert self.dynamic_controls_page.is_remove_btn_displayed() is True
+            assert self.dynamic_controls_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE
+            assert self.dynamic_controls_page.is_text_displayed_under_button() is True
+    
+    def _verify_state_after_click_on_remove_btn(self):
+            assert self.dynamic_controls_page.is_wait_text_displayed() is True
+            assert self.dynamic_controls_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
+            assert self.dynamic_controls_page.is_progress_bar_displayed() is True
+            assert self.dynamic_controls_page.wait_until_checkbox_absent_or_hidden() is True
+            assert self.dynamic_controls_page.wait_until_remove_btn_absent_or_hidden() is True
+            assert self.dynamic_controls_page.is_add_btn_displayed() is True
+            assert self.dynamic_controls_page.get_add_btn_text() == DynamicControlsData.ADD_BUTTON_TITLE
+            assert self.dynamic_controls_page.is_text_displayed_under_button() is True
+   
+    def _verify_state_after_click_on_enable_btn(self):
+            assert self.dynamic_controls_page.is_wait_text_displayed() is True
+            assert self.dynamic_controls_page.get_wait_text() == DynamicControlsData.WAIT_TEXT 
+            assert self.dynamic_controls_page.is_progress_bar_displayed() is True
+            assert self.dynamic_controls_page.wait_until_input_is_enabled() is True
+            assert self.dynamic_controls_page.is_disable_btn_displayed() is True
+            assert self.dynamic_controls_page.get_disable_btn_text() == DynamicControlsData.DISABLE_BUTTON_TITLE
+            assert self.dynamic_controls_page.get_text_under_btn() == DynamicControlsData.TEXT_AFTER_ENABLE
+    
+    def _verify_state_acter_click_on_disable_btn(self):
+            assert self.dynamic_controls_page.is_wait_text_displayed() is True
+            assert self.dynamic_controls_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
+            assert self.dynamic_controls_page.is_progress_bar_displayed() is True
+            assert self.dynamic_controls_page.wait_until_input_is_disabled() is True 
+            assert self.dynamic_controls_page.get_enable_btn_text() == DynamicControlsData.ENABLE_BUTTON_TITLE
+            assert self.dynamic_controls_page.get_text_under_btn() !=  DynamicControlsData.TEXT_AFTER_ENABLE
+            assert self.dynamic_controls_page.get_text_under_btn() == DynamicControlsData.TEXT_AFTER_DISABLE
+      
+    
     @pytest.mark.smoke
     def test_TC38_verify_page_content(self):
         with Reporter.step("Open Dynamic Controls page"):
@@ -57,47 +96,7 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_controls_page.is_checkbox_checked() is True
         self.dynamic_controls_page.click_on_checkbox()
         assert self.dynamic_controls_page.is_checkbox_checked() is False
-
-    def _verify_state_after_click_on_remove_btn(self):
-        assert self.dynamic_controls_page.is_wait_text_displayed() is True
-        assert self.dynamic_controls_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
-        assert self.dynamic_controls_page.is_progress_bar_displayed() is True
-        assert self.dynamic_controls_page.wait_until_checkbox_absent_or_hidden() is True
-        assert self.dynamic_controls_page.wait_until_remove_btn_absent_or_hidden() is True
-        assert self.dynamic_controls_page.is_add_btn_displayed() is True
-        assert self.dynamic_controls_page.get_add_btn_text() == DynamicControlsData.ADD_BUTTON_TITLE
-        assert self.dynamic_controls_page.is_text_displayed_under_button() is True
-
-    def _verify_state_after_click_on_add_btn(self):  
-        assert self.dynamic_controls_page.is_wait_text_displayed() is True
-        assert self.dynamic_controls_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
-        assert self.dynamic_controls_page.is_progress_bar_displayed() is True
-        assert self.dynamic_controls_page.is_checkbox_displayed() is True
-        assert self.dynamic_controls_page.wait_until_add_btn_absent_or_hidden() is True
-        assert self.dynamic_controls_page.is_remove_btn_displayed() is True
-        assert self.dynamic_controls_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE
-        assert self.dynamic_controls_page.is_text_displayed_under_button() is True
-
-    def _verify_state_after_click_on_enable_btn(self):
-        assert self.dynamic_controls_page.is_wait_text_displayed() is True
-        assert self.dynamic_controls_page.get_wait_text() == DynamicControlsData.WAIT_TEXT 
-        assert self.dynamic_controls_page.is_progress_bar_displayed() is True
-        assert self.dynamic_controls_page.wait_until_input_is_enabled() is True
-        assert self.dynamic_controls_page.is_btn_displayed(2) is True
-        assert self.dynamic_controls_page.get_btn_text(2) != DynamicControlsData.ENABLE_BUTTON_TITLE
-        assert self.dynamic_controls_page.get_btn_text(2) == DynamicControlsData.DISABLE_BUTTON_TITLE
-        assert self.dynamic_controls_page.get_text_under_btn() == DynamicControlsData.TEXT_AFTER_ENABLE
-
-    def _verify_state_acter_click_on_disable_btn(self):
-        assert self.dynamic_controls_page.is_wait_text_displayed() is True
-        assert self.dynamic_controls_page.get_wait_text() == DynamicControlsData.WAIT_TEXT
-        assert self.dynamic_controls_page.is_progress_bar_displayed() is True
-        assert self.dynamic_controls_page.wait_until_input_is_disabled() is True 
-        assert self.dynamic_controls_page.get_btn_text(2) != DynamicControlsData.DISABLE_BUTTON_TITLE
-        assert self.dynamic_controls_page.get_btn_text(2) == DynamicControlsData.ENABLE_BUTTON_TITLE
-        assert self.dynamic_controls_page.get_text_under_btn() !=  DynamicControlsData.TEXT_AFTER_ENABLE
-        assert self.dynamic_controls_page.get_text_under_btn() == DynamicControlsData.TEXT_AFTER_DISABLE
-        
+      
     def test_TC40_remove_and_add_checkbox(self):
         with Reporter.step("Observe the Checkbox initial state"):
                 assert self.dynamic_controls_page.is_checkbox_checked() is False
@@ -176,8 +175,8 @@ class TestDynamicControls(BaseTest):
 
         self.dynamic_controls_page.enter_to_input_field(DynamicControlsData.INPUT_TEXT_MIXED_CASE)
         assert self.dynamic_controls_page.get_inputed_text() == DynamicControlsData.INPUT_TEXT_MIXED_CASE
-        assert self.dynamic_controls_page.is_btn_displayed(2) is True
-        assert self.dynamic_controls_page.get_btn_text(2) == DynamicControlsData.DISABLE_BUTTON_TITLE
+        assert self.dynamic_controls_page.is_disable_btn_displayed() is True
+        assert self.dynamic_controls_page.get_disable_btn_text() == DynamicControlsData.DISABLE_BUTTON_TITLE
         
         self.dynamic_controls_page.click_on_disable_btn()
         self._verify_state_acter_click_on_disable_btn()        
@@ -192,8 +191,8 @@ class TestDynamicControls(BaseTest):
                 self.driver.refresh()
         assert self.dynamic_controls_page.is_checkbox_displayed() is True
         assert self.dynamic_controls_page.is_checkbox_checked() is DynamicControlsData.INITIAL_CHECKBOX_STATE
-        assert self.dynamic_controls_page.is_btn_displayed(1) is True
-        assert self.dynamic_controls_page.get_btn_text(1) == DynamicControlsData.REMOVE_BUTTON_TITLE 
+        assert self.dynamic_controls_page.is_remove_btn_displayed() is True
+        assert self.dynamic_controls_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE 
 
         self.dynamic_controls_page.click_on_checkbox()
         assert self.dynamic_controls_page.is_checkbox_checked() is True
@@ -211,9 +210,8 @@ class TestDynamicControls(BaseTest):
         with Reporter.step("Click the browser Refresh button"):
                 self.driver.refresh()
         assert self.dynamic_controls_page.is_checkbox_checked() is DynamicControlsData.INITIAL_CHECKBOX_STATE
-        assert self.dynamic_controls_page.is_btn_displayed(1) is True
-        assert self.dynamic_controls_page.get_btn_text(1) == DynamicControlsData.REMOVE_BUTTON_TITLE
-
+        assert self.dynamic_controls_page.is_remove_btn_displayed() is True
+        assert self.dynamic_controls_page.get_rmv_btn_text() == DynamicControlsData.REMOVE_BUTTON_TITLE
 
     def test_TC44_verify_Iput_field_section_state_after_refresh(self):
         self.dynamic_controls_page.click_on_enable_btn()
@@ -222,8 +220,8 @@ class TestDynamicControls(BaseTest):
         with Reporter.step("Click the browser Refresh button"):
                 self.driver.refresh()
         assert self.dynamic_controls_page.is_input_field_enabeled() is DynamicControlsData.INITIAL_INPUT_STATE         
-        assert self.dynamic_controls_page.is_btn_displayed(2) is True
-        assert self.dynamic_controls_page.get_btn_text(2) == DynamicControlsData.ENABLE_BUTTON_TITLE 
+        assert self.dynamic_controls_page.is_enable_btn_displayed() is True
+        assert self.dynamic_controls_page.get_enable_btn_text() == DynamicControlsData.ENABLE_BUTTON_TITLE 
 
         self.dynamic_controls_page.click_on_enable_btn()
         self._verify_state_after_click_on_enable_btn()
@@ -237,7 +235,7 @@ class TestDynamicControls(BaseTest):
         with Reporter.step("Click the browser Refresh button"):
                 self.driver.refresh()
         assert self.dynamic_controls_page.is_input_field_enabeled() is DynamicControlsData.INITIAL_INPUT_STATE
-        assert self.dynamic_controls_page.get_btn_text(2) == DynamicControlsData.ENABLE_BUTTON_TITLE
+        assert self.dynamic_controls_page.get_enable_btn_text() == DynamicControlsData.ENABLE_BUTTON_TITLE
 
     def test_TC45_navigate_select_and_change_checkbox_section_state_using_keyboard(self):
         self.dynamic_controls_page.focus_checkbox()
@@ -251,8 +249,6 @@ class TestDynamicControls(BaseTest):
 
         self.dynamic_controls_page.press_enter()
         self._verify_state_after_click_on_remove_btn()
-        assert self.dynamic_controls_page.get_btn_text(1) != DynamicControlsData.REMOVE_BUTTON_TITLE 
-        assert self.dynamic_controls_page.get_btn_text(1) == DynamicControlsData.ADD_BUTTON_TITLE        
         assert self.dynamic_controls_page.get_text_under_btn() == DynamicControlsData.TEXT_AFTER_REMOVE
 
         self.dynamic_controls_page.focus_add_btn()
@@ -273,8 +269,6 @@ class TestDynamicControls(BaseTest):
         assert self.dynamic_controls_page.is_remove_btn_focused() is True
         self.dynamic_controls_page.press_enter()
         self._verify_state_after_click_on_remove_btn()
-        assert self.dynamic_controls_page.get_btn_text(1) != DynamicControlsData.REMOVE_BUTTON_TITLE         
-        assert self.dynamic_controls_page.get_btn_text(1) == DynamicControlsData.ADD_BUTTON_TITLE
         assert self.dynamic_controls_page.get_text_under_btn() == DynamicControlsData.TEXT_AFTER_REMOVE 
 
         self.dynamic_controls_page.focus_add_btn()

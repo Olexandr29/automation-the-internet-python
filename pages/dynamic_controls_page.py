@@ -174,12 +174,11 @@ class DynamicControlsPage(BasePage):
     def wait_until_enable_btn_absent(self):
         return self.wait_until_element_absent(self.locators["enable_btn"])
 
-    def is_btn_displayed(self, button_number):
-        return self.find_element_by_number(self.locators["btn"], button_number).is_displayed()
+    def is_disable_btn_displayed(self):
+        return self.find(self.locators["disable_btn"]).is_displayed()
 
-    def get_btn_text(self, button_number):
-        target_btn = self.find_element_by_number(self.locators["btn"], button_number)
-        return target_btn.text
+    def get_disable_btn_text(self):
+        return self.get_text(self.locators["disable_btn"])
     
     def wait_until_input_is_enabled(self):
         return self.wait_until_element_is_enabled(self.locators["input"])
