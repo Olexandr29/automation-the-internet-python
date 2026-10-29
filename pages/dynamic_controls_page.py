@@ -18,7 +18,7 @@ class DynamicControlsPage(BasePage):
             "remove_btn" : (By.XPATH, "//button[text()='Remove']"),
             "add_btn" : (By.XPATH, "//button[text()='Add']"),
             "text_under_btn" : (By.XPATH, "//p[@id='message']"),
-            "enabel_disable_subheader" : (By.XPATH, "//h4[text()='Enable/disable']"),
+            "enable_disable_subheader" : (By.XPATH, "//h4[text()='Enable/disable']"),
             "input" : (By.XPATH, "//input[@type='text']"),
             "enable_btn" : (By.XPATH, "//button[text()='Enable']"),
             "disable_btn" : (By.XPATH, "//button[text()='Disable']"),
@@ -36,21 +36,21 @@ class DynamicControlsPage(BasePage):
         return ready_state
 
     def is_header_displayed(self):
-        with Reporter.step("Observe the Header visibillity"):
+        with Reporter.step("Observe the Header visibility"):
             return self.is_visible(self.locators["header"])
 
     def get_header_text(self):
         return self.get_text(self.locators["header"])
 
     def is_paragraph_displayed(self):
-        with Reporter.step("Observe the page description visibillity"):
+        with Reporter.step("Observe the page description visibility"):
             return self.is_visible(self.locators["paragraph"])
 
     def get_paragraph_text(self):
         return self.get_text(self.locators["paragraph"])
 
     def is_subheader_remove_add_displayed(self):
-        with Reporter.step("Observe the Checkbox section visibillity"):
+        with Reporter.step("Observe the Checkbox section visibility"):
             return self.is_visible(self.locators["remove_add_subheader"])
 
     def get_subheader_remove_add_text(self):
@@ -71,12 +71,12 @@ class DynamicControlsPage(BasePage):
     def get_rmv_btn_text(self):
         return self.get_text(self.locators["remove_btn"])
 
-    def is_subheader_enabel_disable_displayed(self):
-        with Reporter.step("Observe the Input section visibillity"):
-            return self.is_visible(self.locators["enabel_disable_subheader"])
+    def is_subheader_enable_disable_displayed(self):
+        with Reporter.step("Observe the Input section visibility"):
+            return self.is_visible(self.locators["enable_disable_subheader"])
     
-    def get_subheader_enabel_disable_text(self):
-        return self.get_text(self.locators["enabel_disable_subheader"])
+    def get_subheader_enable_disable_text(self):
+        return self.get_text(self.locators["enable_disable_subheader"])
 
     def is_input_displayed(self):
         return self.is_visible(self.locators["input"])
@@ -88,7 +88,7 @@ class DynamicControlsPage(BasePage):
         return self.get_text(self.locators["enable_btn"])
     
     def is_footer_displayed(self):
-        with Reporter.step("Observe the Footer visibillity"):
+        with Reporter.step("Observe the Footer visibility"):
             return self.is_visible(self.locators["footer"])
 
     def get_footer_text(self):
@@ -164,7 +164,7 @@ class DynamicControlsPage(BasePage):
     def get_amount_of_text_without_checkboxes(self):
         return self.get_amount_of_elements(self.locators["just_txt_of_checkbox"])
 
-    def is_input_field_enabeled(self):
+    def is_input_field_enabled(self):
         return self.find(self.locators["input"]).is_enabled()
 
     def click_on_enable_btn(self):
@@ -187,7 +187,7 @@ class DynamicControlsPage(BasePage):
         with Reporter.step("Enter text into the Input field"):
             return self.type(self.locators["input"], text)
 
-    def get_inputed_text(self):
+    def get_input_text(self):
         return self.get_attributte_value(self.locators["input"])
 
     def click_on_disable_btn(self):
@@ -235,7 +235,7 @@ class DynamicControlsPage(BasePage):
         target_webelement = self.find(self.locators["add_btn"])
         return self.press_key_on_element(target_webelement, Keys.ENTER)
 
-    def focus_enale_btn(self):
+    def focus_enable_btn(self):
         target_webelement = self.find(self.locators["enable_btn"])
         return self.focus_element(target_webelement)
         
@@ -251,7 +251,7 @@ class DynamicControlsPage(BasePage):
         target_webelement = self.find(self.locators["input"])
         return self.focus_element(target_webelement)
             
-    def is_input_filed_focused(self):
+    def is_input_field_focused(self):
         target_webelement = self.find(self.locators["input"])
         return self.is_element_focused(target_webelement)
 
