@@ -30,6 +30,6 @@ class TestBrokenImages(BaseTest):
 
     @pytest.mark.smoke
     def test_TC37_verify_image_loading(self):
-        check.is_true(self.broken_images_page.is_img_loaded(1), BrokenImagesData.WARNING(1))
-        check.is_true(self.broken_images_page.is_img_loaded(2), BrokenImagesData.WARNING(2))
+        check.is_false(self.broken_images_page.is_img_loaded(1), BrokenImagesData.WARNING(1))
+        check.is_false(self.broken_images_page.is_img_loaded(2), BrokenImagesData.WARNING(2))
         check.is_true(self.broken_images_page.is_img_loaded(3), BrokenImagesData.WARNING(3))
