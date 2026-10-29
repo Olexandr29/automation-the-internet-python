@@ -18,13 +18,15 @@ class TestBrokenImages(BaseTest):
         assert self.driver.current_url == BrokenImagesData.URL_BROKEN_IMAGES_PAGE, f"The Broken Images page is not loaded successfully, current page is {self.driver.current_url}"
         assert self.broken_images_page.get_document_ready_state() == "complete", f"The document readyState is not 'complete', but now the state is {self.broken_images_page.get_document_ready_state()}"
         assert self.broken_images_page.is_header_displayed() is True, f"The '{BrokenImagesData.HEADER}' header is not displayed"
-        assert self.broken_images_page.get_header_text() == BrokenImagesData.HEADER, f"The header text is not '{BrokenImagesData.HEADER}' but equal {self.broken_images_page.get_header_text}"
+        assert self.broken_images_page.get_header_text() == BrokenImagesData.HEADER, f"The header text is not '{BrokenImagesData.HEADER}' but equal {self.broken_images_page.get_header_text()}"
         with Reporter.step("Observe the Images amount"):
             assert self.broken_images_page.get_imgs_amount() == BrokenImagesData.IMGS_AMOUNT, f"{BrokenImagesData.IMGS_AMOUNT} image elements are not displayed, but found = {self.broken_images_page.get_imgs_amount()}"
         assert self.broken_images_page.is_footer_displayed() is True, "The footer is not displayed"
         assert self.broken_images_page.get_footer_text() == BrokenImagesData.FOOTER, f"The footer text is not '{BrokenImagesData.FOOTER}' but equal {self.broken_images_page.get_footer_text()}"
-        assert self.broken_images_page.is_footer_link_displayed() is True, "The footer link is not displayed"
-        assert self.broken_images_page.get_footer_link_text() == BrokenImagesData.FOOTER_LINK, f"The link text is not '{BrokenImagesData.FOOTER_LINK}' but equal {self.broken_images_page.get_footer_link_text}"
+        assert self.broken_images_page.is_footer_link_selenium_displayed() is True, "The footer link is not displayed"
+        assert self.broken_images_page.get_footer_link_selenium_text() == BrokenImagesData.FOOTER_LINK_SELENIUM, f"The link text is not '{BrokenImagesData.FOOTER_LINK_SELENIUM}' but equal {self.broken_images_page.get_footer_link_selenium_text()}"
+        assert self.broken_images_page.is_footer_link_sauce_labs_displayed() is True, "The footer link is not displayed"
+        assert self.broken_images_page.get_footer_link_sauce_labs_text() == BrokenImagesData.FOOTER_LINK_SAUCE_LABS, f"The link text is not '{BrokenImagesData.FOOTER_LINK_SAUCE_LABS}' but equal {self.broken_images_page.get_footer_link_sauce_labs_text()}"
 
     @pytest.mark.smoke
     def test_TC37_verify_image_loading(self):
