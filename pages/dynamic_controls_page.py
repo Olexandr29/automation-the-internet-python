@@ -191,11 +191,9 @@ class DynamicControlsPage(BasePage):
     def get_inputed_text(self):
         return self.get_attributte_value(self.locators["input"])
 
-
-    def click_on_btn(self, button_number):
-        with Reporter.step("Click on the button"):
-            btn_webelement = self.find_element_by_number(self.locators["btn"], button_number)
-            return btn_webelement.click()
+    def click_on_disable_btn(self):
+        with Reporter.step("Click on the Disable button"):
+            return self.click(self.locators["disable_btn"])
     
     def wait_until_input_is_disabled(self):
         return WebDriverWait(self.driver, 10).until(
