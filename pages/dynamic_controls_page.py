@@ -197,8 +197,8 @@ class DynamicControlsPage(BasePage):
     
     def wait_until_input_is_disabled(self):
         return WebDriverWait(self.driver, 10).until(
-                    EC.all_of(EC.element_attribute_to_include(self.locators["input"], 'disabled')
-                    ))
+                    EC.element_attribute_to_include(self.locators["input"], 'disabled')
+                    )
 
     def focus_checkbox(self):
         target_webelement = self.find(self.locators["check_box"])
