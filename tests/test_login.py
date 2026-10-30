@@ -15,7 +15,7 @@ class TestLogin(BaseTest):
 
     @pytest.mark.smoke
     def test_1_Successful_login(self):
-        assert self.driver.current_url == LoginData.URL_LOGIN_PAGE
+        assert self.driver.current_url == f"{self.base_url}{LoginData.URL_LOGIN_PAGE}"
         secure_page = self.login_page.successful_login(LoginData.VALID_USERNAME, LoginData.VALID_PASSWORD)
         expected_alert_msg = "You logged into a secure area!"
         assert expected_alert_msg in secure_page.get_alert_message(), \
@@ -23,7 +23,7 @@ class TestLogin(BaseTest):
         expected_welcome_msg = "Welcome to the Secure Area. When you are done click logout below."
         assert expected_welcome_msg in secure_page.get_welcome_message(), \
         "the welcome message is wrong"
-        assert self.driver.current_url == LoginData.URL_SECURE_PAGE
+        assert self.driver.current_url == f"{self.base_url}{LoginData.URL_SECURE_PAGE}"
         assert secure_page.is_logout_button_displayed() == True, \
         "the logout button is not displayed"
 
@@ -60,13 +60,13 @@ class TestLogin(BaseTest):
         password = passwords[password_type]
         actual_result = self.login_page.unsuccessful_login(username, password)
         assert expected_msg in actual_result
-        assert self.driver.current_url == LoginData.URL_LOGIN_PAGE
+        assert self.driver.current_url == f"{self.base_url}{LoginData.URL_LOGIN_PAGE}"
 
     @pytest.mark.smoke
     def test_8_Logout(self):
         secure_page = self.login_page.successful_login(LoginData.VALID_USERNAME, LoginData.VALID_PASSWORD)
         secure_page.logout_method()
-        assert self.driver.current_url == LoginData.URL_LOGIN_PAGE, \
+        assert self.driver.current_url == f"{self.base_url}{LoginData.URL_LOGIN_PAGE}", \
         f"User should be redirected to the Login page but now on {self.driver.current_url} "
         actual_alert_msg = self.login_page.get_alert_message()
         assert LoginData.EXPECTED_LOGOUT_MSG in actual_alert_msg, \
@@ -78,7 +78,7 @@ class TestLogin(BaseTest):
     def test_9_User_cannot_access_the_Secure_Area_after_logout(self):
         secure_page = self.login_page.successful_login(LoginData.VALID_USERNAME, LoginData.VALID_PASSWORD)
         secure_page.logout_method()
-        assert self.driver.current_url == LoginData.URL_LOGIN_PAGE, \
+        assert self.driver.current_url == f"{self.base_url}{LoginData.URL_LOGIN_PAGE}", \
         f"User should be redirected to the Login page but now on {self.driver.current_url} "
         actual_alert_msg = self.login_page.get_alert_message()
         assert LoginData.EXPECTED_LOGOUT_MSG in actual_alert_msg, \
@@ -86,7 +86,7 @@ class TestLogin(BaseTest):
         self.driver.back()
         self.driver.refresh()
         login_page = LoginPage(self.driver)
-        assert self.driver.current_url == LoginData.URL_LOGIN_PAGE, \
+        assert self.driver.current_url == f"{self.base_url}{LoginData.URL_LOGIN_PAGE}", \
         f"User should remains on the Login page and should not be able to access to the Secure Area page but now the page is {self.driver.current_url}"
         assert login_page.is_login_button_displayed() == True, \
         "The Login button is not displayed, but should be!"

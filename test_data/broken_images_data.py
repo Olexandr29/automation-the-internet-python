@@ -1,6 +1,6 @@
 class BrokenImagesData:
 
-    URL_BROKEN_IMAGES_PAGE = "https://the-internet.herokuapp.com/broken_images"
+    URL_BROKEN_IMAGES_PAGE = "/broken_images"
     HEADER = "Broken Images"
     IMGS_AMOUNT = 3
     FOOTER = "Powered by Elemental Selenium and Sauce Labs"

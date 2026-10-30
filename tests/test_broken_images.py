@@ -15,7 +15,7 @@ class TestBrokenImages(BaseTest):
             self.broken_images_page = self.home_page.open_broken_images_page()
 
     def test_TC36_verify_page_content(self):
-        assert self.driver.current_url == BrokenImagesData.URL_BROKEN_IMAGES_PAGE, f"The Broken Images page is not loaded successfully, current page is {self.driver.current_url}"
+        assert self.driver.current_url == f"{self.base_url}{BrokenImagesData.URL_BROKEN_IMAGES_PAGE}", f"The Broken Images page is not loaded successfully, current page is {self.driver.current_url}"
         assert self.broken_images_page.get_document_ready_state() == "complete", f"The document readyState is not 'complete', but now the state is {self.broken_images_page.get_document_ready_state()}"
         assert self.broken_images_page.is_header_displayed() is True, f"The '{BrokenImagesData.HEADER}' header is not displayed"
         assert self.broken_images_page.get_header_text() == BrokenImagesData.HEADER, f"The header text is not '{BrokenImagesData.HEADER}' but equal {self.broken_images_page.get_header_text()}"

@@ -15,7 +15,7 @@ class TestCheckbox(BaseTest):
 
     @pytest.mark.smoke
     def test_31_verify_checkboxes_visible(self):
-        assert self.driver.current_url == CheckboxData.URL_CHECKBOX_PAGE, "The Checkboxes page is not opened"
+        assert self.driver.current_url == f"{self.base_url}{CheckboxData.URL_CHECKBOX_PAGE}", "The Checkboxes page is not opened"
         with Reporter.step("Observe checkboxes are visible"):
             assert self.checkbox_page.is_checkbox_visible(1) == True, f"The {CheckboxData.CHECKBOX_1} is not visible"
             assert self.checkbox_page.is_checkbox_visible(2) == True, f"The {CheckboxData.CHECKBOX_2} is not visible"

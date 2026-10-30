@@ -16,7 +16,7 @@ class TestDropdown(BaseTest):
 
     @pytest.mark.smoke
     def test_21_verify_default_state(self):
-        assert self.driver.current_url == DropdownData.URL_DROPDOWN_PAGE, "the URL is wrong"
+        assert self.driver.current_url == f"{self.base_url}{DropdownData.URL_DROPDOWN_PAGE}", "the URL is wrong"
         self.dropdown_page.open_dropdown();
         assert self.dropdown_page.is_dropdown_visible(), "The dropdown is not visible"
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_DEFAULT, "The default selected value is not right"
@@ -97,10 +97,10 @@ class TestDropdown(BaseTest):
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not selected"
         with Reporter.step("Navigate Back"):
             self.driver.back()
-        assert self.driver.current_url == self.home_page.URL, "The Home page is not opened"
+        assert self.driver.current_url == f"{self.base_url}/", "The Home page is not opened"
         assert self.home_page.is_dropdown_link_visible(), 'The Dropdown link is not visible'
         with Reporter.step("Navigate Forward"):
             self.driver.forward()
-        assert self.driver.current_url == DropdownData.URL_DROPDOWN_PAGE, "The Dropdown page is not opened"
+        assert self.driver.current_url == f"{self.base_url}{DropdownData.URL_DROPDOWN_PAGE}", "The Dropdown page is not opened"
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not remained selected after navigating"
 
