@@ -53,7 +53,7 @@ class TestDynamicControls(BaseTest):
     @pytest.mark.smoke
     def test_TC38_verify_page_content(self):
         with Reporter.step("Open Dynamic Controls page"):
-                assert self.driver.current_url == DynamicControlsData.URL
+                assert self.driver.current_url == f"{self.base_url}{DynamicControlsData.URL}"
         assert self.dynamic_controls_page.get_document_ready_state() == "complete"
         
         assert self.dynamic_controls_page.is_header_displayed() is True
