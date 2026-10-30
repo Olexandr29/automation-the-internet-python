@@ -97,7 +97,7 @@ class TestDropdown(BaseTest):
         assert self.dropdown_page.get_selected_option_text() == DropdownData.OPTION_2, f"The {DropdownData.OPTION_2} is not selected"
         with Reporter.step("Navigate Back"):
             self.driver.back()
-        assert self.driver.current_url == self.home_page.URL, "The Home page is not opened"
+        assert self.driver.current_url == f"{self.base_url}/", "The Home page is not opened"
         assert self.home_page.is_dropdown_link_visible(), 'The Dropdown link is not visible'
         with Reporter.step("Navigate Forward"):
             self.driver.forward()
